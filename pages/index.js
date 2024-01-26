@@ -1,6 +1,14 @@
+import ColorPalette from "@/components/ColorPalette";
 import Spotlight from "@/components/Spotlight";
 import getRandomPicture from "@/lib/getRandomPicture";
 
 export default function SpotlightPage({ pieces }) {
-  return <Spotlight image={getRandomPicture(pieces)} />;
+  const randomPiece = getRandomPicture(pieces);
+
+  return (
+    <>
+      <Spotlight image={randomPiece} />
+      <ColorPalette colors={randomPiece.colors} />
+    </>
+  );
 }
