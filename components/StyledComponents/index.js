@@ -28,3 +28,19 @@ export const List = styled.ul`
   gap: 2rem;
   padding: 0;
 `;
+
+export const PalletteList = styled.ul`
+  padding: 0;
+  margin: 0 auto;
+  list-style: none;
+  display: flex;
+  width: 15rem;
+  border: 2px solid black;
+  border-radius: 5px;
+`;
+
+export const PaletteItem = styled.li`
+  height: 6rem;
+  width: 3rem;
+  background-color: ${(prop) => prop.color};
+`;
