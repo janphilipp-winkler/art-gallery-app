@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import styled from "styled-components";
 
 const ListItem = styled.li`
@@ -8,19 +9,21 @@ const ListItem = styled.li`
 
 export default function ArtPiecePreview({ image }) {
   return (
-    <ListItem>
-      <div>
-        <h2>{image.name}</h2>
-        <p>{image.artist}</p>
-      </div>
-      <Image
-        src={image.imageSource}
-        alt={image.name}
-        height={image.dimensions.height * 0.1}
-        width={image.dimensions.width * 0.1}
-        blurDataURL={image.imageSource}
-        placeholder="blur"
-      />
-    </ListItem>
+    <Link href={`/art-pieces/${image.slug}`}>
+      <ListItem>
+        <div>
+          <h2>{image.name}</h2>
+          <p>{image.artist}</p>
+        </div>
+        <Image
+          src={image.imageSource}
+          alt={image.name}
+          height={image.dimensions.height * 0.1}
+          width={image.dimensions.width * 0.1}
+          blurDataURL={image.imageSource}
+          placeholder="blur"
+        />
+      </ListItem>
+    </Link>
   );
 }
