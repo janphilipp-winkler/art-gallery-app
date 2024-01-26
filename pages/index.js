@@ -1,6 +1,6 @@
 import useSWR from "swr";
-import { nanoid } from "nanoid";
-import ArtPieces from "@/components/ArtPieces";
+import Spotlight from "@/components/Spotlight";
+import getRandomPicture from "@/lib/getRandomPicture";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
@@ -18,7 +18,7 @@ export default function HomePage() {
   return (
     <div>
       <h1>Art Gallery</h1>
-      <ArtPieces pieces={data} />
+      <Spotlight image={getRandomPicture(data)} />
     </div>
   );
 }

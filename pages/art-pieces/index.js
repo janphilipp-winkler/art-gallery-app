@@ -1,0 +1,3 @@
+{
+  /* <ArtPieces pieces={data} /> */
+}
