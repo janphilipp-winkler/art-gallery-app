@@ -1,11 +1,11 @@
-import Link from "next/link";
+import { NavLinks, StyledLink } from "../StyledComponents";
 
 export default function Navigation() {
   return (
-    <nav>
-      <Link href={"/"}>Spotlight</Link>
-      <Link href={"/art-pieces"}>Art Pieces</Link>
-      <Link href={"/favorites"}>Favorites</Link>
-    </nav>
+    <NavLinks>
+      <StyledLink href={"/"}>Spotlight</StyledLink>
+      <StyledLink href={"/art-pieces"}>Art Pieces</StyledLink>
+      <StyledLink href={"/favorites"}>Favorites</StyledLink>
+    </NavLinks>
   );
 }
