@@ -1,22 +1,4 @@
-import Link from "next/link";
-import styled from "styled-components";
-
-const NavLinks = styled.nav`
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  margin: 2rem;
-`;
-
-const StyledLink = styled(Link)`
-  text-decoration: none;
-  color: inherit;
-  cursor: pointer;
-
-  &:hover {
-    text-decoration: underline;
-  }
-`;
+import { NavLinks, StyledLink } from "../StyledComponents";
 
 export default function Navigation() {
   return (
