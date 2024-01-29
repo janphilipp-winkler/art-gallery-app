@@ -151,11 +151,11 @@ export default function Details({ pieces }) {
     }
   }, [slug, pieces]);
 
-  useEffect(() => {
-    if (slug) {
-      localStorage.setItem(slug, JSON.stringify(pieceDetails.comments));
-    }
-  }, [pieceDetails.comments, slug]);
+  // useEffect(() => {
+  //   if (slug) {
+  //     localStorage.setItem(slug, JSON.stringify(pieceDetails.comments));
+  //   }
+  // }, [pieceDetails.comments, slug]);
 
   // navigation stuff
 
@@ -180,14 +180,13 @@ export default function Details({ pieces }) {
       timestamp: new Date().toISOString(),
     };
 
-    const updatedComments = [newComment, ...pieceDetails.comments];
-
     setPieceDetails((prevPieceDetails) => ({
       ...prevPieceDetails,
-      comments: updatedComments,
+      comments: [newComment, ...prevPieceDetails.comments],
       counter: prevPieceDetails.counter + 1,
     }));
-    localStorage.setItem(slug, JSON.stringify(pieceDetails.comments));
+    const updatedComments = [newComment, ...pieceDetails.comments];
+    localStorage.setItem(slug, JSON.stringify(updatedComments));
     setCommentText(""); // reset input field
   }
 
