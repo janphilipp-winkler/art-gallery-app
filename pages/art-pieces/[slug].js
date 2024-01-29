@@ -38,7 +38,7 @@ const TitleWrapper = styled.div`
 
 const CommentButton = styled.button`
   position: absolute;
-  top: 20px;
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
   background-color: white;
@@ -77,16 +77,17 @@ const NavigationButton = styled.button`
 
 const CommentCard = styled.div`
   position: fixed;
-  bottom: ${(props) => (props.show ? "0" : "-70%")};
+  bottom: ${(props) => (props.show ? "0" : "-100%")};
   left: 50%;
   transform: translateX(-50%);
   width: 70%;
   height: 80vh;
   background-color: white;
-  padding: 40px;
+  padding: 30px;
   transition: bottom 0.3s ease;
   overflow-y: auto;
   z-index: 999;
+  background-color: #e3e3e3;
 `;
 
 const ContentWrapper = styled.div`
@@ -96,7 +97,7 @@ const ContentWrapper = styled.div`
   /* border: 1px solid black; */
   width: 100%;
   overflow: hidden;
-  margin-top: 40px;
+  /* margin-top: 40px; */
 `;
 
 const ImageInCommentCard = styled(Image)`
@@ -108,12 +109,15 @@ export default function Details({ pieces }) {
   const router = useRouter();
   const { slug } = router.query;
 
-  const [comments, setComments] = useState([]);
-  const [commentCounter, setCommentCounter] = useState(0);
+  // const [comments, setComments] = useState([]);
+  // const [commentCounter, setCommentCounter] = useState(0);
 
   const [pieceDetails, setPieceDetails] = useState({
     comments: [],
+    isFavorite: false,
   });
+
+  console.log(pieceDetails);
 
   const [showCommentCard, setShowCommentCard] = useState(false);
   const [commentText, setCommentText] = useState("");
@@ -134,14 +138,24 @@ export default function Details({ pieces }) {
     if (slug) {
       const currentImage = pieces.find((piece) => piece.slug === slug);
       const storedComments = JSON.parse(localStorage.getItem(slug)) || [];
+      const storedFavorite = JSON.parse(
+        localStorage.getItem(`favorite_${slug}`)
+      );
       setPieceDetails((prevPieceDetails) => ({
         ...prevPieceDetails,
         slug: currentImage,
         comments: storedComments,
         counter: storedComments.length,
+        isFavorite: storedFavorite || false,
       }));
     }
   }, [slug, pieces]);
+
+  useEffect(() => {
+    if (slug) {
+      localStorage.setItem(slug, JSON.stringify(pieceDetails.comments));
+    }
+  }, [pieceDetails.comments, slug]);
 
   // navigation stuff
 
@@ -183,6 +197,17 @@ export default function Details({ pieces }) {
     setCommentText(event.target.value);
   };
 
+  const handleToggleFavorite = (event) => {
+    setPieceDetails((prevPieceDetails) => ({
+      ...prevPieceDetails,
+      isFavorite: event.target.checked,
+    }));
+    localStorage.setItem(
+      `favorite_${slug}`,
+      JSON.stringify(event.target.checked)
+    );
+  };
+
   const sortedComments = pieceDetails.comments.slice().sort((a, b) => {
     return new Date(b.timestamp) - new Date(a.timestamp);
   });
@@ -201,20 +226,25 @@ export default function Details({ pieces }) {
             objectPosition="center"
             alt={`${pieceDetails.slug.name} - Artist: ${pieceDetails.slug.artist} - Year: ${pieceDetails.slug.year}`}
           />
-          <TitleWrapper>
+          {/* <TitleWrapper>
             <h1 style={{ fontSize: 20 }}>{pieceDetails.slug.name}</h1>
-          </TitleWrapper>
+          </TitleWrapper> */}
 
           <CommentCard show={showCommentCard}>
             <ContentWrapper>
               <div>
-                <div>
-                  <input type="checkbox" id="favorite"></input>
-                  <label htmlFor="favorite">Fav</label>
-                </div>
                 {/* <ArtPieceDetails image={image} /> */}
-                <p>Year: {pieceDetails.slug.year}</p>
+                <div>
+                  <input
+                    type="checkbox"
+                    id="favorite"
+                    onChange={handleToggleFavorite}
+                    checked={pieceDetails.isFavorite}
+                  ></input>
+                  <label htmlFor="favorite">❤️</label>
+                </div>
                 <h2 style={{ fontSize: 60 }}>{pieceDetails.slug.name}</h2>
+                <p>Year: {pieceDetails.slug.year}</p>
                 <p>Artist: {pieceDetails.slug.artist}</p>
                 <p>Genre: {pieceDetails.slug.genre}</p>
                 <p>
@@ -266,22 +296,26 @@ export default function Details({ pieces }) {
                 </div>
               ))}
             </div>
-
-            <CommentButton
-              show={showCommentCard}
-              onClick={() => setShowCommentCard(!showCommentCard)}
-            >
-              {showCommentCard ? "Hide Comments" : "Show Comments"}
-              {pieceDetails.comments.length > 0 && (
-                <CommentCounter>{pieceDetails.counter}</CommentCounter>
-              )}
-            </CommentButton>
           </CommentCard>
+          <CommentButton
+            show={showCommentCard}
+            onClick={() => setShowCommentCard(!showCommentCard)}
+          >
+            {showCommentCard
+              ? `${pieceDetails.slug.name} ⬇️`
+              : `${pieceDetails.slug.name} ⬆️`}
+            {pieceDetails.comments.length > 0 && (
+              <CommentCounter>{pieceDetails.counter}</CommentCounter>
+            )}
+            {pieceDetails.isFavorite === true && (
+              <CommentCounter style={{ right: -20 }}>♥</CommentCounter>
+            )}
+          </CommentButton>
           <NavigationButton show={showCommentCard} onClick={goToPreviousPage}>
-            {"<"}
+            {"⬅️"}
           </NavigationButton>
           <NavigationButton show={showCommentCard} onClick={goToNextPage} right>
-            {">"}
+            {"➡️"}
           </NavigationButton>
         </>
       )}
