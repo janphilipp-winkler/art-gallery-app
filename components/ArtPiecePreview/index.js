@@ -6,6 +6,32 @@ import styled from "styled-components";
 const ListItem = styled.li`
   display: grid;
   grid-template-rows: 1fr 2fr;
+  gap: 1rem;
+`;
+
+const GridItemLinkBox = styled(Link)`
+  text-decoration: none;
+  color: black;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+const IsLikedElement = styled.span`
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 4px 5px;
+  font-size: 10px;
+`;
+
+const CommentCounter = styled.span`
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 4px 7px;
+  font-size: 10px;
 `;
 
 export default function ArtPiecePreview({ image }) {
@@ -20,13 +46,13 @@ export default function ArtPiecePreview({ image }) {
   }, [image.slug]);
 
   return (
-    <Link href={`/art-pieces/${image.slug}`}>
+    <GridItemLinkBox href={`/art-pieces/${image.slug}`}>
       <ListItem>
-        <div>
-          <h2>{image.name}</h2>
-          <p>{image.artist}</p>
-          {isLiked && <span>&#128150;</span>}
-          {commentCount > 0 && <span>{commentCount} comments</span>}
+        <div style={{ width: 200 }}>
+          <h3>{image.name}</h3>
+          <p>by {image.artist}</p>
+          {isLiked && <IsLikedElement>♥</IsLikedElement>}
+          {commentCount > 0 && <CommentCounter>{commentCount}</CommentCounter>}
         </div>
         <Image
           src={image.imageSource}
@@ -37,6 +63,6 @@ export default function ArtPiecePreview({ image }) {
           placeholder="blur"
         />
       </ListItem>
-    </Link>
+    </GridItemLinkBox>
   );
 }

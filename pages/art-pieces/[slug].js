@@ -86,14 +86,14 @@ const CommentCard = styled.div`
   padding: 30px;
   transition: bottom 0.3s ease;
   overflow-y: auto;
-  z-index: 999;
-  background-color: #e3e3e3;
+  /* background-color: #e3e3e3; */
+  padding-bottom: 100px;
 `;
 
 const ContentWrapper = styled.div`
   display: grid;
   grid-template-columns: 1.5fr 1fr;
-  gap: 0px 20px;
+  gap: 0rem 2rem;
   /* border: 1px solid black; */
   width: 100%;
   overflow: hidden;
@@ -248,7 +248,7 @@ export default function Details({ pieces }) {
                 <p>Genre: {pieceDetails.slug.genre}</p>
                 <p>
                   Dimensions: {pieceDetails.slug.dimensions.width} x{" "}
-                  {pieceDetails.slug.dimensions.height} {"/ "}
+                  {pieceDetails.slug.dimensions.height}
                 </p>
                 <p>
                   Format: {"."}

@@ -35,9 +35,10 @@ export const StyledLink = styled(Link)`
 
 export const List = styled.ul`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   padding: 0;
+  margin: 2rem;
+  gap: 1rem;
 `;
 
 export const PalletteList = styled.ul`
