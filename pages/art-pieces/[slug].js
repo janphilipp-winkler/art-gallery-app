@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import styled, { keyframes } from "styled-components";
 import Image from "next/image";
-import ArtPieceDetails from "@/components/ArtPieceDetails";
 
 const zoomIn = keyframes`
   0% {
@@ -94,12 +93,14 @@ export default function Details({ pieces }) {
   const router = useRouter();
   const { slug } = router.query;
 
-  const [image, setImage] = useState(null);
-
-  const [showCommentCard, setShowCommentCard] = useState(false);
-
   const [comments, setComments] = useState([]);
   const [commentCounter, setCommentCounter] = useState(0);
+
+  const [pieceDetails, setPieceDetails] = useState({
+    comments: [],
+  });
+
+  const [showCommentCard, setShowCommentCard] = useState(false);
   const [commentText, setCommentText] = useState("");
 
   // animationKey is a climbing number that gets updated every time image changes, then gets attached to the image component, which rerenders and the animation gets called once again
@@ -107,20 +108,23 @@ export default function Details({ pieces }) {
   const [animationKey, setAnimationKey] = useState(0);
 
   useEffect(() => {
-    if (image) {
+    if (pieceDetails.slug) {
       setAnimationKey((prevKey) => prevKey + 1);
     }
-  }, [image]);
+  }, [pieceDetails.slug]);
 
   // useEffect gets slug, finds corresponding image, finds corresponding comments, counts them and updates the CommentCounter
 
   useEffect(() => {
     if (slug) {
       const currentImage = pieces.find((piece) => piece.slug === slug);
-      setImage(currentImage);
       const storedComments = JSON.parse(localStorage.getItem(slug)) || [];
-      setComments(storedComments);
-      setCommentCounter(storedComments.length);
+      setPieceDetails((prevPieceDetails) => ({
+        ...prevPieceDetails,
+        slug: currentImage,
+        comments: storedComments,
+        counter: storedComments.length,
+      }));
     }
   }, [slug, pieces]);
 
@@ -146,11 +150,16 @@ export default function Details({ pieces }) {
       text: commentText,
       timestamp: new Date().toISOString(),
     };
-    const updatedComments = [...comments, newComment];
-    setComments(updatedComments);
-    localStorage.setItem(slug, JSON.stringify(updatedComments));
+
+    const updatedComments = [newComment, ...pieceDetails.comments];
+
+    setPieceDetails((prevPieceDetails) => ({
+      ...prevPieceDetails,
+      comments: updatedComments,
+      counter: prevPieceDetails.counter + 1,
+    }));
+    localStorage.setItem(slug, JSON.stringify(pieceDetails.comments));
     setCommentText(""); // reset input field
-    setCommentCounter(commentCounter + 1);
   }
 
   // is needed to update the input field while typing
@@ -159,52 +168,56 @@ export default function Details({ pieces }) {
     setCommentText(event.target.value);
   };
 
-  const sortedComments = comments.slice().sort((a, b) => {
+  const sortedComments = pieceDetails.comments.slice().sort((a, b) => {
     return new Date(b.timestamp) - new Date(a.timestamp);
   });
 
   return (
     <>
-      {image && (
+      {pieceDetails.slug && (
         <>
           <BackgroundImage
             key={animationKey}
             show={showCommentCard}
-            src={image.imageSource}
+            src={pieceDetails.slug.imageSource}
             loading="eager"
             layout="fill"
             objectFit="cover"
             objectPosition="center"
-            alt={`${image.name} - Artist: ${image.artist} - Year: ${image.year}`}
+            alt={`${pieceDetails.slug.name} - Artist: ${pieceDetails.slug.artist} - Year: ${pieceDetails.slug.year}`}
           />
           <TitleWrapper>
-            <h1 style={{ fontSize: 20 }}>{image.name}</h1>
+            <h1 style={{ fontSize: 20 }}>{pieceDetails.slug.name}</h1>
           </TitleWrapper>
 
           <CommentCard show={showCommentCard}>
             <div style={{ marginTop: 40 }}>
+              <div>
+                <input type="checkbox" id="favorite"></input>
+                <label htmlFor="favorite">Fav</label>
+              </div>
               {/* <ArtPieceDetails image={image} /> */}
               <Image
-                src={image.imageSource}
-                height={image.dimensions.height * 0.06}
-                width={image.dimensions.width * 0.06}
-                alt={`${image.name} - Artist: ${image.artist} - Year: ${image.year}`}
+                src={pieceDetails.slug.imageSource}
+                height={pieceDetails.slug.dimensions.height * 0.06}
+                width={pieceDetails.slug.dimensions.width * 0.06}
+                alt={`${pieceDetails.slug.name} - Artist: ${pieceDetails.slug.artist} - Year: ${pieceDetails.slug.year}`}
               />
-              <h2>{image.name}</h2>
-              <p>Artist: {image.artist}</p>
-              <p>Year: {image.year}</p>
-              <p>Genre: {image.genre}</p>
+              <h2>{pieceDetails.slug.name}</h2>
+              <p>Artist: {pieceDetails.slug.artist}</p>
+              <p>Year: {pieceDetails.slug.year}</p>
+              <p>Genre: {pieceDetails.slug.genre}</p>
               <p>
-                Dimensions: {image.dimensions.width} x {image.dimensions.height}{" "}
-                {"/ "}
+                Dimensions: {pieceDetails.slug.dimensions.width} x{" "}
+                {pieceDetails.slug.dimensions.height} {"/ "}
               </p>
               <p>
                 Format: {"."}
-                {image.dimensions.type}
+                {pieceDetails.slug.dimensions.type}
               </p>
               <p>
                 Colors:{" "}
-                {image.colors.map((color) => (
+                {pieceDetails.slug.colors.map((color) => (
                   <span key={color} style={{ backgroundColor: color }}>
                     {color}
                   </span>
@@ -240,8 +253,8 @@ export default function Details({ pieces }) {
               onClick={() => setShowCommentCard(!showCommentCard)}
             >
               {showCommentCard ? "Hide Comments" : "Show Comments"}
-              {comments.length > 0 && (
-                <CommentCounter>{commentCounter}</CommentCounter>
+              {pieceDetails.comments.length > 0 && (
+                <CommentCounter>{pieceDetails.counter}</CommentCounter>
               )}
             </CommentButton>
           </CommentCard>
