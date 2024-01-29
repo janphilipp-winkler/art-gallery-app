@@ -80,13 +80,28 @@ const CommentCard = styled.div`
   bottom: ${(props) => (props.show ? "0" : "-70%")};
   left: 50%;
   transform: translateX(-50%);
-  width: 60%;
+  width: 70%;
   height: 80vh;
   background-color: white;
   padding: 40px;
   transition: bottom 0.3s ease;
   overflow-y: auto;
   z-index: 999;
+`;
+
+const ContentWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 0px 20px;
+  /* border: 1px solid black; */
+  width: 100%;
+  overflow: hidden;
+  margin-top: 40px;
+`;
+
+const ImageInCommentCard = styled(Image)`
+  width: 100%;
+  height: auto;
 `;
 
 export default function Details({ pieces }) {
@@ -191,39 +206,43 @@ export default function Details({ pieces }) {
           </TitleWrapper>
 
           <CommentCard show={showCommentCard}>
-            <div style={{ marginTop: 40 }}>
+            <ContentWrapper>
               <div>
-                <input type="checkbox" id="favorite"></input>
-                <label htmlFor="favorite">Fav</label>
+                <div>
+                  <input type="checkbox" id="favorite"></input>
+                  <label htmlFor="favorite">Fav</label>
+                </div>
+                {/* <ArtPieceDetails image={image} /> */}
+                <p>Year: {pieceDetails.slug.year}</p>
+                <h2 style={{ fontSize: 60 }}>{pieceDetails.slug.name}</h2>
+                <p>Artist: {pieceDetails.slug.artist}</p>
+                <p>Genre: {pieceDetails.slug.genre}</p>
+                <p>
+                  Dimensions: {pieceDetails.slug.dimensions.width} x{" "}
+                  {pieceDetails.slug.dimensions.height} {"/ "}
+                </p>
+                <p>
+                  Format: {"."}
+                  {pieceDetails.slug.dimensions.type}
+                </p>
+                <p>
+                  Colors:{" "}
+                  {pieceDetails.slug.colors.map((color) => (
+                    <span key={color} style={{ backgroundColor: color }}>
+                      {color}
+                    </span>
+                  ))}
+                </p>
               </div>
-              {/* <ArtPieceDetails image={image} /> */}
-              <Image
-                src={pieceDetails.slug.imageSource}
-                height={pieceDetails.slug.dimensions.height * 0.06}
-                width={pieceDetails.slug.dimensions.width * 0.06}
-                alt={`${pieceDetails.slug.name} - Artist: ${pieceDetails.slug.artist} - Year: ${pieceDetails.slug.year}`}
-              />
-              <h2>{pieceDetails.slug.name}</h2>
-              <p>Artist: {pieceDetails.slug.artist}</p>
-              <p>Year: {pieceDetails.slug.year}</p>
-              <p>Genre: {pieceDetails.slug.genre}</p>
-              <p>
-                Dimensions: {pieceDetails.slug.dimensions.width} x{" "}
-                {pieceDetails.slug.dimensions.height} {"/ "}
-              </p>
-              <p>
-                Format: {"."}
-                {pieceDetails.slug.dimensions.type}
-              </p>
-              <p>
-                Colors:{" "}
-                {pieceDetails.slug.colors.map((color) => (
-                  <span key={color} style={{ backgroundColor: color }}>
-                    {color}
-                  </span>
-                ))}
-              </p>
-            </div>
+              <div>
+                <ImageInCommentCard
+                  src={pieceDetails.slug.imageSource}
+                  height={pieceDetails.slug.dimensions.height * 0.2}
+                  width={pieceDetails.slug.dimensions.width * 0.2}
+                  alt={`${pieceDetails.slug.name} - Artist: ${pieceDetails.slug.artist} - Year: ${pieceDetails.slug.year}`}
+                />
+              </div>
+            </ContentWrapper>
             <form onSubmit={handleSubmit}>
               <input
                 type="text"
