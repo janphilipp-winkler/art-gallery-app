@@ -5,8 +5,8 @@ export default function Layout({ children }) {
   return (
     <>
       <H1>Art Gallery</H1>
-      {children}
       <Navigation />
+      {children}
     </>
   );
 }
