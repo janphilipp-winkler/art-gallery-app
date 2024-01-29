@@ -12,7 +12,7 @@ const zoomIn = keyframes`
   }
 `;
 
-const BackgroundImage = styled(Image)`
+export const BackgroundImage = styled(Image)`
   position: fixed;
   top: 0;
   left: 0;

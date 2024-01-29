@@ -1,11 +1,14 @@
-import { NavLinks, StyledLink } from "../StyledComponents";
+import { MenuButton, NavLinks, StyledLink } from "../StyledComponents";
 
 export default function Navigation() {
   return (
     <NavLinks>
-      <StyledLink href={"/"}>Spotlight</StyledLink>
-      <StyledLink href={"/art-pieces"}>Art Pieces</StyledLink>
-      <StyledLink href={"/favorites"}>Favorites</StyledLink>
+      <MenuButton as="a" href={"/art-pieces"}>
+        art pieces
+      </MenuButton>
+      <MenuButton as="a" href={"/favorites"}>
+        ❤️
+      </MenuButton>
     </NavLinks>
   );
 }

@@ -8,7 +8,7 @@ export default function SpotlightPage({ pieces }) {
   return (
     <>
       <Spotlight image={randomPiece} />
-      <ColorPalette colors={randomPiece.colors} />
+      {/* <ColorPalette colors={randomPiece.colors} /> */}
     </>
   );
 }
