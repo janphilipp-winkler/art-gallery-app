@@ -38,17 +38,22 @@ const CommentCounter = styled.span`
   font-size: 10px;
 `;
 
-export default function ArtPiecePreview({ image }) {
+export default function ArtPiecePreview({
+  image,
+  favorites,
+  setFavorites,
+  removeItem,
+}) {
   const [isLiked, setIsLiked] = useState(false);
   const [commentCount, setCommentCount] = useState(0);
   const [isFlipped, setIsFlipped] = useState(true);
 
-  useEffect(() => {
-    const isLiked = JSON.parse(localStorage.getItem(`favorite_${image.slug}`));
-    setIsLiked(isLiked);
-    const value = JSON.parse(localStorage.getItem(image.slug)) || {};
-    setCommentCount(value.length);
-  }, [image.slug]);
+  // useEffect(() => {
+  //   const isLiked = JSON.parse(localStorage.getItem(`favorite_${image.slug}`));
+  //   setIsLiked(isLiked);
+  //   const value = JSON.parse(localStorage.getItem(image.slug)) || {};
+  //   setCommentCount(value.length);
+  // }, [image.slug]);
 
   function toggleFlip() {
     setIsFlipped(!isFlipped);
@@ -76,6 +81,9 @@ export default function ArtPiecePreview({ image }) {
           placeholder="blur"
           isLiked={isLiked}
           setIsLiked={setIsLiked}
+          favorites={favorites}
+          setFavorites={setFavorites}
+          removeItem={removeItem}
         />
         <button onClick={toggleFlip}>Click to flip</button>
       </div>

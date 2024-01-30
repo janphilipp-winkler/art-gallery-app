@@ -3,18 +3,22 @@ import ArtPiecePreview from "@/components/ArtPiecePreview";
 import { List } from "@/components/StyledComponents";
 import { nanoid } from "nanoid";
 
-export default function Favorites({ pieces }) {
+export default function Favorites({
+  pieces,
+  favorites,
+  setFavorites,
+  removeItem,
+}) {
   const [likedPieces, setLikedPieces] = useState([]);
 
   useEffect(() => {
     // Filter pieces array based on local storage
     const filteredPieces = pieces.filter((piece) => {
-      const isLiked = localStorage.getItem(`favorite_${piece.slug}`);
-      return isLiked === "true";
+      return favorites[piece.slug] === true;
     });
 
     setLikedPieces(filteredPieces);
-  }, [pieces]);
+  }, [favorites]);
 
   console.log(likedPieces);
 
@@ -22,7 +26,13 @@ export default function Favorites({ pieces }) {
     <List>
       {likedPieces.map((piece) => (
         <>
-          <ArtPiecePreview key={nanoid()} image={piece} />
+          <ArtPiecePreview
+            key={nanoid()}
+            image={piece}
+            favorites={favorites}
+            setFavorites={setFavorites}
+            removeItem={removeItem}
+          />
         </>
       ))}
     </List>
