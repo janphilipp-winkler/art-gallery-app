@@ -2,13 +2,10 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import styled, { keyframes } from "styled-components";
 import Image from "next/image";
-import ToggleFavorite from "@/components/ToggleFavorite";
-import ArtPieceDetailedInfo from "@/components/ArtPieceDetailedInfo";
-import ColorPalette from "@/components/ColorPalette";
-import CommentSection from "@/components/CommentSection";
 import useLocalStorageState from "use-local-storage-state";
 import DetailsNavigation from "@/components/DetailsNavigation";
 import DetailsButton from "@/components/DetailsButton";
+import DetailsCard from "@/components/DetailsCard";
 
 const zoomIn = keyframes`
   0% {
@@ -28,36 +25,6 @@ export const BackgroundImage = styled(Image)`
   z-index: -1;
   filter: ${(props) => (props.show ? "blur(50px)" : "blur(0px)")};
   animation: ${zoomIn} 0.5s linear;
-`;
-
-const CommentCard = styled.div`
-  position: fixed;
-  bottom: ${(props) => (props.show ? "0" : "-100%")};
-  left: 50%;
-  transform: translateX(-50%);
-  width: 70%;
-  height: 80vh;
-  background-color: white;
-  padding: 30px;
-  transition: bottom 0.3s ease;
-  overflow-y: auto;
-  /* background-color: #e3e3e3; */
-  padding-bottom: 100px;
-`;
-
-const ContentWrapper = styled.div`
-  display: grid;
-  grid-template-columns: 1.5fr 1fr;
-  gap: 0rem 2rem;
-  /* border: 1px solid black; */
-  width: 100%;
-  overflow: hidden;
-  /* margin-top: 40px; */
-`;
-
-const ImageInCommentCard = styled(Image)`
-  width: 100%;
-  height: auto;
 `;
 
 export default function Details({ pieces }) {
@@ -94,7 +61,6 @@ export default function Details({ pieces }) {
       setPieceDetails((prevPieceDetails) => ({
         ...prevPieceDetails,
         ...currentImage,
-        slug: currentImage,
         comments: storedComments,
         counter: storedComments.length,
         isFavorite: storedFavorite || false,
@@ -136,6 +102,8 @@ export default function Details({ pieces }) {
     setShowCommentCard(!showCommentCard);
   }
 
+  const { name, artist, year } = pieceDetails;
+
   return (
     <>
       {pieceDetails.slug && (
@@ -143,39 +111,19 @@ export default function Details({ pieces }) {
           <BackgroundImage
             key={animationKey}
             show={showCommentCard}
-            src={pieceDetails.slug.imageSource}
+            src={pieceDetails.imageSource}
             loading="eager"
             layout="fill"
             objectFit="cover"
             objectPosition="center"
-            alt={`${pieceDetails.slug.name} - Artist: ${pieceDetails.slug.artist} - Year: ${pieceDetails.slug.year}`}
+            alt={`${name} - Artist: ${artist} - Year: ${year}`}
           />{" "}
-          <CommentCard show={showCommentCard}>
-            <ContentWrapper>
-              <div>
-                <ToggleFavorite
-                  onToggleFavorite={handleToggleFavorite}
-                  isFavorite={pieceDetails.isFavorite}
-                />
-                <ArtPieceDetailedInfo piece={pieceDetails.slug} />
-                <p>
-                  <ColorPalette colors={pieceDetails.slug.colors} />
-                </p>
-              </div>
-              <div>
-                <ImageInCommentCard
-                  src={pieceDetails.slug.imageSource}
-                  height={pieceDetails.slug.dimensions.height * 0.2}
-                  width={pieceDetails.slug.dimensions.width * 0.2}
-                  alt={`${pieceDetails.slug.name} - Artist: ${pieceDetails.slug.artist} - Year: ${pieceDetails.slug.year}`}
-                />
-              </div>
-            </ContentWrapper>
-            <CommentSection
-              onAddComment={handleAddComment}
-              pieceDetails={pieceDetails}
-            />
-          </CommentCard>
+          <DetailsCard
+            pieceDetails={pieceDetails}
+            showCommentCard={showCommentCard}
+            onToggleFavorite={handleToggleFavorite}
+            onAddComment={handleAddComment}
+          />
           <DetailsButton
             showCommentCard={showCommentCard}
             onShowCommentCard={handleShowCommentCard}

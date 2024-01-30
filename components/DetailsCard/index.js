@@ -3,6 +3,7 @@ import ToggleFavorite from "../ToggleFavorite";
 import ArtPieceDetailedInfo from "../ArtPieceDetailedInfo";
 import ColorPalette from "../ColorPalette";
 import CommentSection from "../CommentSection";
+import Image from "next/image";
 
 const CommentCard = styled.div`
   position: fixed;
@@ -38,17 +39,10 @@ export default function DetailsCard({
   pieceDetails,
   showCommentCard,
   onToggleFavorite,
+  onAddComment,
 }) {
-  const {
-    isFavorite,
-    slug,
-    colors,
-    imageSource,
-    dimensions,
-    name,
-    artist,
-    year,
-  } = pieceDetails;
+  const { isFavorite, colors, imageSource, dimensions, name, artist, year } =
+    pieceDetails;
   const { height, width } = dimensions;
 
   return (
@@ -59,7 +53,7 @@ export default function DetailsCard({
             onToggleFavorite={onToggleFavorite}
             isFavorite={isFavorite}
           />
-          <ArtPieceDetailedInfo piece={slug} />
+          <ArtPieceDetailedInfo piece={pieceDetails} />
           <p>
             <ColorPalette colors={colors} />
           </p>
@@ -73,10 +67,7 @@ export default function DetailsCard({
           />
         </div>
       </ContentWrapper>
-      <CommentSection
-        onAddComment={handleAddComment}
-        pieceDetails={pieceDetails}
-      />
+      <CommentSection onAddComment={onAddComment} pieceDetails={pieceDetails} />
     </CommentCard>
   );
 }
