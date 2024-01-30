@@ -32,7 +32,7 @@ export default function CommentSection({ onAddComment, pieceDetails }) {
       <div>
         {sortedComments.map((comment) => (
           <div key={nanoid}>
-            <p>{`"${comment.text}"`}</p>
+            <p>{comment.text}</p>
             <p>
               {new Date(comment.timestamp).toLocaleString("de-GE", {
                 dateStyle: "short",
