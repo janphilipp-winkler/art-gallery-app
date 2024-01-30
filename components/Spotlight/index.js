@@ -24,6 +24,8 @@ const CalltoActionButton = styled.button`
 
 const CopyrightButton = styled(CalltoActionButton)`
   bottom: 20px;
+  text-align: center;
+  opacity: 0.7;
 `;
 
 export default function Spotlight({ image }) {
@@ -43,7 +45,10 @@ export default function Spotlight({ image }) {
         This is image is from <strong>{image.artist}</strong>. <br></br>Do you
         want to see more?
       </CalltoActionButton>
-      <CopyrightButton>
+      <CopyrightButton
+        as="a"
+        href="https://github.com/janphilipp-winkler/art-gallery-app"
+      >
         <small>
           Made with ♥ by<br></br>Mareike, Bruno, Şevket & Jan-Philipp
         </small>
