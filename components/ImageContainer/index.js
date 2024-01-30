@@ -34,11 +34,8 @@ export default function ImageContainer({
   blur,
   blurDataURL,
   placeholder,
-  isLiked,
-  setIsLiked,
   favorites,
   setFavorites,
-  removeItem,
 }) {
   function handleFavClick(id) {
     const newFavorites = { ...favorites };
@@ -47,7 +44,7 @@ export default function ImageContainer({
   }
   return (
     <DivContainer>
-      <GridItemLinkBox href={href ? href : "#"}>
+      <GridItemLinkBox href={href ? `art-pieces/${href}` : "#"}>
         <Image
           id={id}
           src={src}

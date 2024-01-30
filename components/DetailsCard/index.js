@@ -3,7 +3,7 @@ import ToggleFavorite from "../ToggleFavorite";
 import ArtPieceDetailedInfo from "../ArtPieceDetailedInfo";
 import ColorPalette from "../ColorPalette";
 import CommentSection from "../CommentSection";
-import Image from "next/image";
+import ImageContainer from "../ImageContainer";
 
 const CommentCard = styled.div`
   position: fixed;
@@ -30,8 +30,8 @@ const ContentWrapper = styled.div`
   /* margin-top: 40px; */
 `;
 
-const ImageInCommentCard = styled(Image)`
-  width: 100%;
+const ImageInCommentCard = styled(ImageContainer)`
+  width: 20px;
   height: auto;
 `;
 
@@ -40,9 +40,19 @@ export default function DetailsCard({
   showCommentCard,
   onToggleFavorite,
   onAddComment,
+  favorites,
+  setFavorites,
 }) {
-  const { isFavorite, colors, imageSource, dimensions, name, artist, year } =
-    pieceDetails;
+  const {
+    isFavorite,
+    colors,
+    imageSource,
+    dimensions,
+    name,
+    artist,
+    year,
+    slug,
+  } = pieceDetails;
   const { height, width } = dimensions;
 
   return (
@@ -60,10 +70,13 @@ export default function DetailsCard({
         </div>
         <div>
           <ImageInCommentCard
+            id={slug}
             src={imageSource}
             height={height * 0.2}
             width={width * 0.2}
             alt={`${name} - Artist: ${artist} - Year: ${year}`}
+            favorites={favorites}
+            setFavorites={setFavorites}
           />
         </div>
       </ContentWrapper>

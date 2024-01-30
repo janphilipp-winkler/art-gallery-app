@@ -3,12 +3,7 @@ import ArtPiecePreview from "@/components/ArtPiecePreview";
 import { List } from "@/components/StyledComponents";
 import { nanoid } from "nanoid";
 
-export default function Favorites({
-  pieces,
-  favorites,
-  setFavorites,
-  removeItem,
-}) {
+export default function Favorites({ pieces, favorites, setFavorites }) {
   const [likedPieces, setLikedPieces] = useState([]);
 
   useEffect(() => {
@@ -16,7 +11,6 @@ export default function Favorites({
     const filteredPieces = pieces.filter((piece) => {
       return favorites[piece.slug] === true;
     });
-
     setLikedPieces(filteredPieces);
   }, [favorites]);
 
@@ -31,7 +25,6 @@ export default function Favorites({
             image={piece}
             favorites={favorites}
             setFavorites={setFavorites}
-            removeItem={removeItem}
           />
         </>
       ))}

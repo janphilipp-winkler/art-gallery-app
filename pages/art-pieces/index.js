@@ -1,14 +1,8 @@
 import { nanoid } from "nanoid";
 import ArtPiecePreview from "@/components/ArtPiecePreview";
 import { List } from "@/components/StyledComponents";
-import { useEffect } from "react";
 
-export default function ArtPieces({
-  pieces,
-  setFavorites,
-  favorites,
-  removeItem,
-}) {
+export default function ArtPieces({ pieces, setFavorites, favorites }) {
   return (
     <List>
       {pieces.map((piece) => (
@@ -17,7 +11,6 @@ export default function ArtPieces({
           image={piece}
           favorites={favorites}
           setFavorites={setFavorites}
-          removeItem={removeItem}
         />
       ))}
     </List>
