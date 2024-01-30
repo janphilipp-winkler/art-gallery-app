@@ -5,6 +5,8 @@ import Image from "next/image";
 import ToggleFavorite from "@/components/ToggleFavorite";
 import ArtPieceDetailedInfo from "@/components/ArtPieceDetailedInfo";
 import ColorPalette from "@/components/ColorPalette";
+import CommentSection from "@/components/CommentSection";
+import useLocalStorageState from "use-local-storage-state";
 
 const zoomIn = keyframes`
   0% {
@@ -112,18 +114,18 @@ export default function Details({ pieces }) {
   const router = useRouter();
   const { slug } = router.query;
 
-  const [pieceDetails, setPieceDetails] = useState({
-    comments: [],
-    isFavorite: false,
+  const [pieceDetails, setPieceDetails] = useLocalStorageState("pieceDetails", {
+    defaultValue: {
+      comments: [],
+      isFavorite: false,
+    },
   });
 
   console.log(pieceDetails);
 
   const [showCommentCard, setShowCommentCard] = useState(false);
-  const [commentText, setCommentText] = useState("");
 
   // animationKey is a climbing number that gets updated every time image changes, then gets attached to the image component, which rerenders and the animation gets called once again
-
   const [animationKey, setAnimationKey] = useState(0);
 
   useEffect(() => {
@@ -152,14 +154,6 @@ export default function Details({ pieces }) {
     }
   }, [slug, pieces]);
 
-  // useEffect(() => {
-  //   if (slug) {
-  //     localStorage.setItem(slug, JSON.stringify(pieceDetails.comments));
-  //   }
-  // }, [pieceDetails.comments, slug]);
-
-  // navigation stuff
-
   function handleNavigation(direction) {
     const currentIndex = pieces.findIndex((piece) => piece.slug === slug);
     const nextIndex =
@@ -174,28 +168,13 @@ export default function Details({ pieces }) {
 
   //comment stuff
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    const newComment = {
-      text: commentText,
-      timestamp: new Date().toISOString(),
-    };
-
+  function handleAddComment(comment) {
     setPieceDetails((prevPieceDetails) => ({
       ...prevPieceDetails,
-      comments: [newComment, ...prevPieceDetails.comments],
+      comments: [comment, ...prevPieceDetails.comments],
       counter: prevPieceDetails.counter + 1,
     }));
-    const updatedComments = [newComment, ...pieceDetails.comments];
-    localStorage.setItem(slug, JSON.stringify(updatedComments));
-    setCommentText(""); // reset input field
   }
-
-  // is needed to update the input field while typing
-
-  const handleCommentChange = (event) => {
-    setCommentText(event.target.value);
-  };
 
   const handleToggleFavorite = (event) => {
     setPieceDetails((prevPieceDetails) => ({
@@ -207,10 +186,6 @@ export default function Details({ pieces }) {
       JSON.stringify(event.target.checked)
     );
   };
-
-  const sortedComments = pieceDetails.comments.slice().sort((a, b) => {
-    return new Date(b.timestamp) - new Date(a.timestamp);
-  });
 
   return (
     <>
@@ -252,29 +227,10 @@ export default function Details({ pieces }) {
                 />
               </div>
             </ContentWrapper>
-            <form onSubmit={handleSubmit}>
-              <input
-                type="text"
-                value={commentText}
-                onChange={handleCommentChange}
-                placeholder="Add a comment..."
-                required
-              />
-              <button type="submit">Comment</button>
-            </form>
-            <div>
-              {sortedComments.map((comment, index) => (
-                <div key={index}>
-                  <p>"{comment.text}"</p>
-                  <p>
-                    {new Date(comment.timestamp).toLocaleString("de-GE", {
-                      dateStyle: "short",
-                      timeStyle: "short",
-                    })}
-                  </p>
-                </div>
-              ))}
-            </div>
+            <CommentSection
+              onAddComment={handleAddComment}
+              pieceDetails={pieceDetails}
+            />
           </CommentCard>
           <CommentButton
             show={showCommentCard}
