@@ -1,7 +1,6 @@
 import Navigation from "../Navigation";
-import { H1, MenuButton, NavLinks } from "../StyledComponents";
+import { MenuButton, NavLinks } from "../StyledComponents";
 import styled from "styled-components";
-import { StyledLink } from "../StyledComponents";
 
 const ContentWrapper = styled.div`
   display: flex;

@@ -7,6 +7,7 @@ import ArtPieceDetailedInfo from "@/components/ArtPieceDetailedInfo";
 import ColorPalette from "@/components/ColorPalette";
 import CommentSection from "@/components/CommentSection";
 import useLocalStorageState from "use-local-storage-state";
+import DetailsNavigation from "@/components/DetailsNavigation";
 
 const zoomIn = keyframes`
   0% {
@@ -28,20 +29,7 @@ export const BackgroundImage = styled(Image)`
   animation: ${zoomIn} 0.5s linear;
 `;
 
-const TitleWrapper = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  z-index: 900;
-  background-color: white;
-  border-radius: 40px;
-  padding: 0px 20px;
-  opacity: 70%;
-`;
-
-const CommentButton = styled.button`
+const DetailsButton = styled.button`
   position: absolute;
   bottom: 20px;
   left: 50%;
@@ -64,20 +52,6 @@ const CommentCounter = styled.span`
   border-radius: 50%;
   padding: 4px 7px;
   font-size: 10px;
-`;
-
-const NavigationButton = styled.button`
-  position: absolute;
-  bottom: 20px;
-  left: ${(props) => (props.right ? "auto" : "20px")};
-  right: ${(props) => (props.right ? "20px" : "auto")};
-  padding: 10px 20px;
-  background-color: white;
-  color: black;
-  border: 1px solid #e3e3e3;
-  border-radius: 20px;
-  cursor: pointer;
-  z-index: 1000;
 `;
 
 const CommentCard = styled.div`
@@ -163,9 +137,6 @@ export default function Details({ pieces }) {
     router.push(`/art-pieces/${pieces[nextIndex].slug}`);
   }
 
-  const goToNextPage = () => handleNavigation("next");
-  const goToPreviousPage = () => handleNavigation("previous");
-
   //comment stuff
 
   function handleAddComment(comment) {
@@ -200,15 +171,10 @@ export default function Details({ pieces }) {
             objectFit="cover"
             objectPosition="center"
             alt={`${pieceDetails.slug.name} - Artist: ${pieceDetails.slug.artist} - Year: ${pieceDetails.slug.year}`}
-          />
-          {/* <TitleWrapper>
-            <h1 style={{ fontSize: 20 }}>{pieceDetails.slug.name}</h1>
-          </TitleWrapper> */}
-
+          />{" "}
           <CommentCard show={showCommentCard}>
             <ContentWrapper>
               <div>
-                {/* <ArtPieceDetails image={image} /> */}
                 <ToggleFavorite
                   onToggleFavorite={handleToggleFavorite}
                   isFavorite={pieceDetails.isFavorite}
@@ -232,7 +198,7 @@ export default function Details({ pieces }) {
               pieceDetails={pieceDetails}
             />
           </CommentCard>
-          <CommentButton
+          <DetailsButton
             show={showCommentCard}
             onClick={() => setShowCommentCard(!showCommentCard)}
           >
@@ -245,13 +211,11 @@ export default function Details({ pieces }) {
             {pieceDetails.isFavorite === true && (
               <CommentCounter style={{ right: -20 }}>♥</CommentCounter>
             )}
-          </CommentButton>
-          <NavigationButton show={showCommentCard} onClick={goToPreviousPage}>
-            {"⬅️"}
-          </NavigationButton>
-          <NavigationButton show={showCommentCard} onClick={goToNextPage} right>
-            {"➡️"}
-          </NavigationButton>
+          </DetailsButton>
+          <DetailsNavigation
+            showCommentCard={showCommentCard}
+            onNavigation={handleNavigation}
+          />
         </>
       )}
     </>
