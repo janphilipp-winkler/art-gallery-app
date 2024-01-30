@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import styled from "styled-components";
 import ReactCardFlip from "react-card-flip";
+import ImageContainer from "../ImageContainer";
 
 const ListItem = styled(ReactCardFlip)`
   display: grid;
@@ -65,13 +66,16 @@ export default function ArtPiecePreview({ image }) {
         <button onClick={toggleFlip}>Click to flip</button>
       </div>
       <div>
-        <Image
+        <ImageContainer
+          id={image.slug}
           src={image.imageSource}
           alt={image.name}
           height={image.dimensions.height * 0.1}
           width={image.dimensions.width * 0.1}
           blurDataURL={image.imageSource}
           placeholder="blur"
+          isLiked={isLiked}
+          setIsLiked={setIsLiked}
         />
         <button onClick={toggleFlip}>Click to flip</button>
       </div>
