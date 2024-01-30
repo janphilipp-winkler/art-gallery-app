@@ -58,7 +58,6 @@ export default function ArtPiecePreview({
         <GridItemLinkBox href={`/art-pieces/${image.slug}`}>
           <h3>{image.name}</h3>
           <p>by {image.artist}</p>
-          {isLiked && <IsLikedElement>♥</IsLikedElement>}
           {commentCount > 0 && <CommentCounter>{commentCount}</CommentCounter>}
         </GridItemLinkBox>
         <button onClick={toggleFlip}>Click to flip</button>
