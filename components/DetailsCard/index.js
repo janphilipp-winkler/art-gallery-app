@@ -41,16 +41,8 @@ export default function DetailsCard({
   onToggleFavorite,
   onAddComment,
 }) {
-  const {
-    isFavorite,
-    slug,
-    colors,
-    imageSource,
-    dimensions,
-    name,
-    artist,
-    year,
-  } = pieceDetails;
+  const { isFavorite, colors, imageSource, dimensions, name, artist, year } =
+    pieceDetails;
   const { height, width } = dimensions;
 
   return (
@@ -61,7 +53,7 @@ export default function DetailsCard({
             onToggleFavorite={onToggleFavorite}
             isFavorite={isFavorite}
           />
-          <ArtPieceDetailedInfo piece={slug} />
+          <ArtPieceDetailedInfo piece={pieceDetails} />
           <p>
             <ColorPalette colors={colors} />
           </p>
