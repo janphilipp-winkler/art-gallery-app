@@ -9,6 +9,7 @@ import CommentSection from "@/components/CommentSection";
 import useLocalStorageState from "use-local-storage-state";
 import DetailsNavigation from "@/components/DetailsNavigation";
 import DetailsButton from "@/components/DetailsButton";
+import DetailsCard from "@/components/DetailsCard";
 
 const zoomIn = keyframes`
   0% {
@@ -150,32 +151,12 @@ export default function Details({ pieces }) {
             objectPosition="center"
             alt={`${pieceDetails.slug.name} - Artist: ${pieceDetails.slug.artist} - Year: ${pieceDetails.slug.year}`}
           />{" "}
-          <CommentCard show={showCommentCard}>
-            <ContentWrapper>
-              <div>
-                <ToggleFavorite
-                  onToggleFavorite={handleToggleFavorite}
-                  isFavorite={pieceDetails.isFavorite}
-                />
-                <ArtPieceDetailedInfo piece={pieceDetails.slug} />
-                <p>
-                  <ColorPalette colors={pieceDetails.slug.colors} />
-                </p>
-              </div>
-              <div>
-                <ImageInCommentCard
-                  src={pieceDetails.slug.imageSource}
-                  height={pieceDetails.slug.dimensions.height * 0.2}
-                  width={pieceDetails.slug.dimensions.width * 0.2}
-                  alt={`${pieceDetails.slug.name} - Artist: ${pieceDetails.slug.artist} - Year: ${pieceDetails.slug.year}`}
-                />
-              </div>
-            </ContentWrapper>
-            <CommentSection
-              onAddComment={handleAddComment}
-              pieceDetails={pieceDetails}
-            />
-          </CommentCard>
+          <DetailsCard
+            pieceDetails={pieceDetails}
+            showCommentCard={showCommentCard}
+            onToggleFavorite={handleToggleFavorite}
+            onAddComment={handleAddComment}
+          />
           <DetailsButton
             showCommentCard={showCommentCard}
             onShowCommentCard={handleShowCommentCard}
