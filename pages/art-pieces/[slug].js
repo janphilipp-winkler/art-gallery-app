@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import styled, { keyframes } from "styled-components";
 import Image from "next/image";
+import ToggleFavorite from "@/components/ToggleFavorite";
+import ArtPieceDetailedInfo from "@/components/ArtPieceDetailedInfo";
+import ColorPalette from "@/components/ColorPalette";
 
 const zoomIn = keyframes`
   0% {
@@ -109,9 +112,6 @@ export default function Details({ pieces }) {
   const router = useRouter();
   const { slug } = router.query;
 
-  // const [comments, setComments] = useState([]);
-  // const [commentCounter, setCommentCounter] = useState(0);
-
   const [pieceDetails, setPieceDetails] = useState({
     comments: [],
     isFavorite: false,
@@ -143,6 +143,7 @@ export default function Details({ pieces }) {
       );
       setPieceDetails((prevPieceDetails) => ({
         ...prevPieceDetails,
+        ...currentImage,
         slug: currentImage,
         comments: storedComments,
         counter: storedComments.length,
@@ -233,34 +234,13 @@ export default function Details({ pieces }) {
             <ContentWrapper>
               <div>
                 {/* <ArtPieceDetails image={image} /> */}
-                <div>
-                  <input
-                    type="checkbox"
-                    id="favorite"
-                    onChange={handleToggleFavorite}
-                    checked={pieceDetails.isFavorite}
-                  ></input>
-                  <label htmlFor="favorite">❤️</label>
-                </div>
-                <h2 style={{ fontSize: 60 }}>{pieceDetails.slug.name}</h2>
-                <p>Year: {pieceDetails.slug.year}</p>
-                <p>Artist: {pieceDetails.slug.artist}</p>
-                <p>Genre: {pieceDetails.slug.genre}</p>
+                <ToggleFavorite
+                  onToggleFavorite={handleToggleFavorite}
+                  isFavorite={pieceDetails.isFavorite}
+                />
+                <ArtPieceDetailedInfo piece={pieceDetails.slug} />
                 <p>
-                  Dimensions: {pieceDetails.slug.dimensions.width} x{" "}
-                  {pieceDetails.slug.dimensions.height}
-                </p>
-                <p>
-                  Format: {"."}
-                  {pieceDetails.slug.dimensions.type}
-                </p>
-                <p>
-                  Colors:{" "}
-                  {pieceDetails.slug.colors.map((color) => (
-                    <span key={color} style={{ backgroundColor: color }}>
-                      {color}
-                    </span>
-                  ))}
+                  <ColorPalette colors={pieceDetails.slug.colors} />
                 </p>
               </div>
               <div>
