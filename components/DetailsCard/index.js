@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import ToggleFavorite from "../ToggleFavorite";
 import ArtPieceDetailedInfo from "../ArtPieceDetailedInfo";
 import ColorPalette from "../ColorPalette";
 import CommentSection from "../CommentSection";
@@ -16,7 +15,6 @@ const CommentCard = styled.div`
   padding: 30px;
   transition: bottom 0.3s ease;
   overflow-y: auto;
-  /* background-color: #e3e3e3; */
   padding-bottom: 100px;
 `;
 
@@ -24,10 +22,8 @@ const ContentWrapper = styled.div`
   display: grid;
   grid-template-columns: 1.5fr 1fr;
   gap: 0rem 2rem;
-  /* border: 1px solid black; */
   width: 100%;
   overflow: hidden;
-  /* margin-top: 40px; */
 `;
 
 const ImageInCommentCard = styled(ImageContainer)`
@@ -38,7 +34,6 @@ const ImageInCommentCard = styled(ImageContainer)`
 export default function DetailsCard({
   pieceDetails,
   showCommentCard,
-  onToggleFavorite,
   onAddComment,
   favorites,
   setFavorites,
@@ -59,10 +54,6 @@ export default function DetailsCard({
     <CommentCard show={showCommentCard}>
       <ContentWrapper>
         <div>
-          <ToggleFavorite
-            onToggleFavorite={onToggleFavorite}
-            isFavorite={isFavorite}
-          />
           <ArtPieceDetailedInfo piece={pieceDetails} />
           <p>
             <ColorPalette colors={colors} />

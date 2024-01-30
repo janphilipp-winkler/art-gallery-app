@@ -72,7 +72,7 @@ export default function Details({ pieces, favorites, setFavorites }) {
         isFavorite: storedFavorite,
       }));
     }
-  }, [slug, pieces]);
+  }, [slug, pieces, favorites]);
 
   function handleNavigation(direction) {
     const currentIndex = pieces.findIndex((piece) => piece.slug === slug);
