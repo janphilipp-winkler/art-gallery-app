@@ -48,13 +48,6 @@ export default function ArtPiecePreview({
   const [commentCount, setCommentCount] = useState(0);
   const [isFlipped, setIsFlipped] = useState(true);
 
-  // useEffect(() => {
-  //   const isLiked = JSON.parse(localStorage.getItem(`favorite_${image.slug}`));
-  //   setIsLiked(isLiked);
-  //   const value = JSON.parse(localStorage.getItem(image.slug)) || {};
-  //   setCommentCount(value.length);
-  // }, [image.slug]);
-
   function toggleFlip() {
     setIsFlipped(!isFlipped);
   }
@@ -72,6 +65,7 @@ export default function ArtPiecePreview({
       </div>
       <div>
         <ImageContainer
+          href={image.slug}
           id={image.slug}
           src={image.imageSource}
           alt={image.name}

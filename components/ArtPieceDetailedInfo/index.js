@@ -1,5 +1,5 @@
 export default function ArtPieceDetailedInfo({ piece }) {
-  const { name, year, artist, genre, dimensions } = piece;
+  const { name, year, artist, genre, dimensions, slug } = piece;
   const { width, height, type } = dimensions;
   return (
     <>
@@ -13,6 +13,7 @@ export default function ArtPieceDetailedInfo({ piece }) {
       <p>
         Format: {"."}
         {type}
+        {slug}
       </p>
     </>
   );

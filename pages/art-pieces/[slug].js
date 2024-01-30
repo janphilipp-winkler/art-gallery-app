@@ -27,7 +27,7 @@ export const BackgroundImage = styled(Image)`
   animation: ${zoomIn} 0.5s linear;
 `;
 
-export default function Details({ pieces }) {
+export default function Details({ pieces, favorites, setFavorites }) {
   const router = useRouter();
   const { slug } = router.query;
 
@@ -55,15 +55,21 @@ export default function Details({ pieces }) {
     if (slug) {
       const currentImage = pieces.find((piece) => piece.slug === slug);
       const storedComments = JSON.parse(localStorage.getItem(slug)) || [];
-      const storedFavorite = JSON.parse(
-        localStorage.getItem(`favorite_${slug}`)
+      const storedFavorite = favorites[slug];
+      console.log(
+        "comments: ",
+        storedComments,
+        "counter: ",
+        storedComments.length,
+        "isFavorite: ",
+        storedFavorite
       );
       setPieceDetails((prevPieceDetails) => ({
         ...prevPieceDetails,
         ...currentImage,
         comments: storedComments,
         counter: storedComments.length,
-        isFavorite: storedFavorite || false,
+        isFavorite: storedFavorite,
       }));
     }
   }, [slug, pieces]);
@@ -86,17 +92,6 @@ export default function Details({ pieces }) {
       counter: prevPieceDetails.counter + 1,
     }));
   }
-
-  const handleToggleFavorite = (event) => {
-    setPieceDetails((prevPieceDetails) => ({
-      ...prevPieceDetails,
-      isFavorite: event.target.checked,
-    }));
-    localStorage.setItem(
-      `favorite_${slug}`,
-      JSON.stringify(event.target.checked)
-    );
-  };
 
   function handleShowCommentCard() {
     setShowCommentCard(!showCommentCard);
@@ -121,8 +116,9 @@ export default function Details({ pieces }) {
           <DetailsCard
             pieceDetails={pieceDetails}
             showCommentCard={showCommentCard}
-            onToggleFavorite={handleToggleFavorite}
             onAddComment={handleAddComment}
+            favorites={favorites}
+            setFavorites={setFavorites}
           />
           <DetailsButton
             showCommentCard={showCommentCard}
