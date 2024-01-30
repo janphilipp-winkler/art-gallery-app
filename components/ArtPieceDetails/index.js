@@ -1,5 +1,7 @@
 import Image from "next/image";
 
+// IS NOT USED ANYMORE
+
 export default function ArtPieceDetails({ image }) {
   return (
     <>
