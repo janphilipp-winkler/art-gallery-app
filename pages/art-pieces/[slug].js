@@ -8,6 +8,7 @@ import ColorPalette from "@/components/ColorPalette";
 import CommentSection from "@/components/CommentSection";
 import useLocalStorageState from "use-local-storage-state";
 import DetailsNavigation from "@/components/DetailsNavigation";
+import DetailsButton from "@/components/DetailsButton";
 
 const zoomIn = keyframes`
   0% {
@@ -27,31 +28,6 @@ export const BackgroundImage = styled(Image)`
   z-index: -1;
   filter: ${(props) => (props.show ? "blur(50px)" : "blur(0px)")};
   animation: ${zoomIn} 0.5s linear;
-`;
-
-const DetailsButton = styled.button`
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: white;
-  color: black;
-  border: 1px solid #e3e3e3;
-  border-radius: 20px;
-  padding: 10px 20px;
-  cursor: pointer;
-  z-index: 999;
-`;
-
-const CommentCounter = styled.span`
-  position: absolute;
-  top: -6px;
-  right: -6px;
-  background-color: red;
-  color: white;
-  border-radius: 50%;
-  padding: 4px 7px;
-  font-size: 10px;
 `;
 
 const CommentCard = styled.div`
@@ -94,8 +70,6 @@ export default function Details({ pieces }) {
       isFavorite: false,
     },
   });
-
-  console.log(pieceDetails);
 
   const [showCommentCard, setShowCommentCard] = useState(false);
 
@@ -158,6 +132,10 @@ export default function Details({ pieces }) {
     );
   };
 
+  function handleShowCommentCard() {
+    setShowCommentCard(!showCommentCard);
+  }
+
   return (
     <>
       {pieceDetails.slug && (
@@ -199,19 +177,10 @@ export default function Details({ pieces }) {
             />
           </CommentCard>
           <DetailsButton
-            show={showCommentCard}
-            onClick={() => setShowCommentCard(!showCommentCard)}
-          >
-            {showCommentCard
-              ? `${pieceDetails.slug.name} ⬇️`
-              : `${pieceDetails.slug.name} ⬆️`}
-            {pieceDetails.comments.length > 0 && (
-              <CommentCounter>{pieceDetails.counter}</CommentCounter>
-            )}
-            {pieceDetails.isFavorite === true && (
-              <CommentCounter style={{ right: -20 }}>♥</CommentCounter>
-            )}
-          </DetailsButton>
+            showCommentCard={showCommentCard}
+            onShowCommentCard={handleShowCommentCard}
+            pieceDetails={pieceDetails}
+          />
           <DetailsNavigation
             showCommentCard={showCommentCard}
             onNavigation={handleNavigation}
