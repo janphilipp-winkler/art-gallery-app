@@ -2,22 +2,18 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import styled from "styled-components";
+import ReactCardFlip from "react-card-flip";
 import ImageContainer from "../ImageContainer";
 
-const ListItem = styled.li`
+const ListItem = styled(ReactCardFlip)`
   display: grid;
   grid-template-rows: 1fr 2fr;
   gap: 1rem;
+  border: 1px solid red;
 `;
-
 // const GridItemLinkBox = styled(Link)`
 //   text-decoration: none;
-//   color: black;
-
-//   &:hover {
-//     text-decoration: underline;
-//   }
-// `;
+//   color: black;`;
 
 const IsLikedElement = styled.span`
   background-color: red;
@@ -38,6 +34,7 @@ const CommentCounter = styled.span`
 export default function ArtPiecePreview({ image }) {
   const [isLiked, setIsLiked] = useState(false);
   const [commentCount, setCommentCount] = useState(0);
+  const [isFlipped, setIsFlipped] = useState(true);
 
   useEffect(() => {
     const isLiked = JSON.parse(localStorage.getItem(`favorite_${image.slug}`));
@@ -45,6 +42,10 @@ export default function ArtPiecePreview({ image }) {
     const value = JSON.parse(localStorage.getItem(image.slug)) || {};
     setCommentCount(value.length);
   }, [image.slug]);
+
+  function toggleFlip() {
+    setIsFlipped(!isFlipped);
+  }
 
   return (
     // <GridItemLinkBox href={`/art-pieces/${image.slug}`}>
@@ -55,17 +56,13 @@ export default function ArtPiecePreview({ image }) {
         {isLiked && <IsLikedElement>♥</IsLikedElement>}
         {commentCount > 0 && <CommentCounter>{commentCount}</CommentCounter>}
       </div>
-      <ImageContainer
-        href={`/art-pieces/${image.slug}`}
-        id={image.slug}
+      <Image
         src={image.imageSource}
         alt={image.name}
         height={image.dimensions.height * 0.1}
         width={image.dimensions.width * 0.1}
         blurDataURL={image.imageSource}
         placeholder="blur"
-        setIsLiked={setIsLiked}
-        isLiked={isLiked}
       />
     </ListItem>
     // </GridItemLinkBox>
