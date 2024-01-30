@@ -2,16 +2,19 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import styled from "styled-components";
+import ReactCardFlip from "react-card-flip";
 
-const ListItem = styled.li`
+const ListItem = styled(ReactCardFlip)`
   display: grid;
   grid-template-rows: 1fr 2fr;
   gap: 1rem;
+  border: 1px solid red;
 `;
 
 const GridItemLinkBox = styled(Link)`
   text-decoration: none;
   color: black;
+  /* border: 1px solid black; */
 
   &:hover {
     text-decoration: underline;
@@ -37,6 +40,7 @@ const CommentCounter = styled.span`
 export default function ArtPiecePreview({ image }) {
   const [isLiked, setIsLiked] = useState(false);
   const [commentCount, setCommentCount] = useState(0);
+  const [isFlipped, setIsFlipped] = useState(true);
 
   useEffect(() => {
     const isLiked = JSON.parse(localStorage.getItem(`favorite_${image.slug}`));
@@ -45,15 +49,22 @@ export default function ArtPiecePreview({ image }) {
     setCommentCount(value.length);
   }, [image.slug]);
 
+  function toggleFlip() {
+    setIsFlipped(!isFlipped);
+  }
+
   return (
-    <GridItemLinkBox href={`/art-pieces/${image.slug}`}>
-      <ListItem>
-        <div style={{ width: 200 }}>
+    <ListItem isFlipped={isFlipped} flipDirection="horizontal">
+      <div>
+        <GridItemLinkBox href={`/art-pieces/${image.slug}`}>
           <h3>{image.name}</h3>
           <p>by {image.artist}</p>
           {isLiked && <IsLikedElement>♥</IsLikedElement>}
           {commentCount > 0 && <CommentCounter>{commentCount}</CommentCounter>}
-        </div>
+        </GridItemLinkBox>
+        <button onClick={toggleFlip}>Click to flip</button>
+      </div>
+      <div>
         <Image
           src={image.imageSource}
           alt={image.name}
@@ -62,7 +73,8 @@ export default function ArtPiecePreview({ image }) {
           blurDataURL={image.imageSource}
           placeholder="blur"
         />
-      </ListItem>
-    </GridItemLinkBox>
+        <button onClick={toggleFlip}>Click to flip</button>
+      </div>
+    </ListItem>
   );
 }
