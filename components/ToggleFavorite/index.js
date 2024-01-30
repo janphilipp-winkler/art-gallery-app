@@ -1,12 +1,18 @@
+import styled from "styled-components";
+
+const HiddenInput = styled.input`
+  display: none;
+`;
+
 export default function ToggleFavorite({ onToggleFavorite, isFavorite }) {
   return (
     <>
-      <input
+      <HiddenInput
         type="checkbox"
         id="favorite"
         onChange={onToggleFavorite}
         checked={isFavorite}
-      ></input>
+      ></HiddenInput>
       <label htmlFor="favorite">❤️</label>
     </>
   );
