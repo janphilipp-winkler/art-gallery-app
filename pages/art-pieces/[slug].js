@@ -2,6 +2,13 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import styled, { keyframes } from "styled-components";
 import Image from "next/image";
+import ToggleFavorite from "@/components/ToggleFavorite";
+import ArtPieceDetailedInfo from "@/components/ArtPieceDetailedInfo";
+import ColorPalette from "@/components/ColorPalette";
+import CommentSection from "@/components/CommentSection";
+import useLocalStorageState from "use-local-storage-state";
+import DetailsNavigation from "@/components/DetailsNavigation";
+import DetailsButton from "@/components/DetailsButton";
 
 const zoomIn = keyframes`
   0% {
@@ -21,58 +28,6 @@ export const BackgroundImage = styled(Image)`
   z-index: -1;
   filter: ${(props) => (props.show ? "blur(50px)" : "blur(0px)")};
   animation: ${zoomIn} 0.5s linear;
-`;
-
-const TitleWrapper = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  z-index: 900;
-  background-color: white;
-  border-radius: 40px;
-  padding: 0px 20px;
-  opacity: 70%;
-`;
-
-const CommentButton = styled.button`
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: white;
-  color: black;
-  border: 1px solid #e3e3e3;
-  border-radius: 20px;
-  padding: 10px 20px;
-  cursor: pointer;
-  z-index: 999;
-`;
-
-const CommentCounter = styled.span`
-  position: absolute;
-  top: -6px;
-  right: -6px;
-  background-color: red;
-  color: white;
-  border-radius: 50%;
-  padding: 4px 7px;
-  font-size: 10px;
-`;
-
-const NavigationButton = styled.button`
-  position: absolute;
-  bottom: 20px;
-  left: ${(props) => (props.right ? "auto" : "20px")};
-  right: ${(props) => (props.right ? "20px" : "auto")};
-  padding: 10px 20px;
-  background-color: white;
-  color: black;
-  border: 1px solid #e3e3e3;
-  border-radius: 20px;
-  cursor: pointer;
-  z-index: 1000;
 `;
 
 const CommentCard = styled.div`
@@ -109,21 +64,16 @@ export default function Details({ pieces }) {
   const router = useRouter();
   const { slug } = router.query;
 
-  // const [comments, setComments] = useState([]);
-  // const [commentCounter, setCommentCounter] = useState(0);
-
-  const [pieceDetails, setPieceDetails] = useState({
-    comments: [],
-    isFavorite: false,
+  const [pieceDetails, setPieceDetails] = useLocalStorageState("pieceDetails", {
+    defaultValue: {
+      comments: [],
+      isFavorite: false,
+    },
   });
 
-  console.log(pieceDetails);
-
   const [showCommentCard, setShowCommentCard] = useState(false);
-  const [commentText, setCommentText] = useState("");
 
   // animationKey is a climbing number that gets updated every time image changes, then gets attached to the image component, which rerenders and the animation gets called once again
-
   const [animationKey, setAnimationKey] = useState(0);
 
   useEffect(() => {
@@ -143,6 +93,7 @@ export default function Details({ pieces }) {
       );
       setPieceDetails((prevPieceDetails) => ({
         ...prevPieceDetails,
+        ...currentImage,
         slug: currentImage,
         comments: storedComments,
         counter: storedComments.length,
@@ -150,14 +101,6 @@ export default function Details({ pieces }) {
       }));
     }
   }, [slug, pieces]);
-
-  // useEffect(() => {
-  //   if (slug) {
-  //     localStorage.setItem(slug, JSON.stringify(pieceDetails.comments));
-  //   }
-  // }, [pieceDetails.comments, slug]);
-
-  // navigation stuff
 
   function handleNavigation(direction) {
     const currentIndex = pieces.findIndex((piece) => piece.slug === slug);
@@ -168,33 +111,15 @@ export default function Details({ pieces }) {
     router.push(`/art-pieces/${pieces[nextIndex].slug}`);
   }
 
-  const goToNextPage = () => handleNavigation("next");
-  const goToPreviousPage = () => handleNavigation("previous");
-
   //comment stuff
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    const newComment = {
-      text: commentText,
-      timestamp: new Date().toISOString(),
-    };
-
+  function handleAddComment(comment) {
     setPieceDetails((prevPieceDetails) => ({
       ...prevPieceDetails,
-      comments: [newComment, ...prevPieceDetails.comments],
+      comments: [comment, ...prevPieceDetails.comments],
       counter: prevPieceDetails.counter + 1,
     }));
-    const updatedComments = [newComment, ...pieceDetails.comments];
-    localStorage.setItem(slug, JSON.stringify(updatedComments));
-    setCommentText(""); // reset input field
   }
-
-  // is needed to update the input field while typing
-
-  const handleCommentChange = (event) => {
-    setCommentText(event.target.value);
-  };
 
   const handleToggleFavorite = (event) => {
     setPieceDetails((prevPieceDetails) => ({
@@ -207,9 +132,9 @@ export default function Details({ pieces }) {
     );
   };
 
-  const sortedComments = pieceDetails.comments.slice().sort((a, b) => {
-    return new Date(b.timestamp) - new Date(a.timestamp);
-  });
+  function handleShowCommentCard() {
+    setShowCommentCard(!showCommentCard);
+  }
 
   return (
     <>
@@ -224,43 +149,17 @@ export default function Details({ pieces }) {
             objectFit="cover"
             objectPosition="center"
             alt={`${pieceDetails.slug.name} - Artist: ${pieceDetails.slug.artist} - Year: ${pieceDetails.slug.year}`}
-          />
-          {/* <TitleWrapper>
-            <h1 style={{ fontSize: 20 }}>{pieceDetails.slug.name}</h1>
-          </TitleWrapper> */}
-
+          />{" "}
           <CommentCard show={showCommentCard}>
             <ContentWrapper>
               <div>
-                {/* <ArtPieceDetails image={image} /> */}
-                <div>
-                  <input
-                    type="checkbox"
-                    id="favorite"
-                    onChange={handleToggleFavorite}
-                    checked={pieceDetails.isFavorite}
-                  ></input>
-                  <label htmlFor="favorite">❤️</label>
-                </div>
-                <h2 style={{ fontSize: 60 }}>{pieceDetails.slug.name}</h2>
-                <p>Year: {pieceDetails.slug.year}</p>
-                <p>Artist: {pieceDetails.slug.artist}</p>
-                <p>Genre: {pieceDetails.slug.genre}</p>
+                <ToggleFavorite
+                  onToggleFavorite={handleToggleFavorite}
+                  isFavorite={pieceDetails.isFavorite}
+                />
+                <ArtPieceDetailedInfo piece={pieceDetails.slug} />
                 <p>
-                  Dimensions: {pieceDetails.slug.dimensions.width} x{" "}
-                  {pieceDetails.slug.dimensions.height}
-                </p>
-                <p>
-                  Format: {"."}
-                  {pieceDetails.slug.dimensions.type}
-                </p>
-                <p>
-                  Colors:{" "}
-                  {pieceDetails.slug.colors.map((color) => (
-                    <span key={color} style={{ backgroundColor: color }}>
-                      {color}
-                    </span>
-                  ))}
+                  <ColorPalette colors={pieceDetails.slug.colors} />
                 </p>
               </div>
               <div>
@@ -272,50 +171,20 @@ export default function Details({ pieces }) {
                 />
               </div>
             </ContentWrapper>
-            <form onSubmit={handleSubmit}>
-              <input
-                type="text"
-                value={commentText}
-                onChange={handleCommentChange}
-                placeholder="Add a comment..."
-                required
-              />
-              <button type="submit">Comment</button>
-            </form>
-            <div>
-              {sortedComments.map((comment, index) => (
-                <div key={index}>
-                  <p>"{comment.text}"</p>
-                  <p>
-                    {new Date(comment.timestamp).toLocaleString("de-GE", {
-                      dateStyle: "short",
-                      timeStyle: "short",
-                    })}
-                  </p>
-                </div>
-              ))}
-            </div>
+            <CommentSection
+              onAddComment={handleAddComment}
+              pieceDetails={pieceDetails}
+            />
           </CommentCard>
-          <CommentButton
-            show={showCommentCard}
-            onClick={() => setShowCommentCard(!showCommentCard)}
-          >
-            {showCommentCard
-              ? `${pieceDetails.slug.name} ⬇️`
-              : `${pieceDetails.slug.name} ⬆️`}
-            {pieceDetails.comments.length > 0 && (
-              <CommentCounter>{pieceDetails.counter}</CommentCounter>
-            )}
-            {pieceDetails.isFavorite === true && (
-              <CommentCounter style={{ right: -20 }}>♥</CommentCounter>
-            )}
-          </CommentButton>
-          <NavigationButton show={showCommentCard} onClick={goToPreviousPage}>
-            {"⬅️"}
-          </NavigationButton>
-          <NavigationButton show={showCommentCard} onClick={goToNextPage} right>
-            {"➡️"}
-          </NavigationButton>
+          <DetailsButton
+            showCommentCard={showCommentCard}
+            onShowCommentCard={handleShowCommentCard}
+            pieceDetails={pieceDetails}
+          />
+          <DetailsNavigation
+            showCommentCard={showCommentCard}
+            onNavigation={handleNavigation}
+          />
         </>
       )}
     </>

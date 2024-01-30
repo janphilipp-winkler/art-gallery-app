@@ -1,4 +1,4 @@
-import { MenuButton, NavLinks, StyledLink } from "../StyledComponents";
+import { MenuButton, NavLinks } from "../StyledComponents";
 
 export default function Navigation() {
   return (
