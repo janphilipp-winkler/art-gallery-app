@@ -2,14 +2,25 @@ import styled from "styled-components";
 import Link from "next/link";
 
 export const H1 = styled.h1`
-  text-align: center;
+  text-align: start;
+  font-size: 1rem;
+  padding: 0;
+  margin: 2rem;
 `;
 
 export const NavLinks = styled.nav`
   display: flex;
-  justify-content: center;
+  /* justify-content: left; */
   gap: 2rem;
   margin: 2rem;
+`;
+
+export const MenuButton = styled.button`
+  background-color: white;
+  color: black;
+  border: 1px solid #e3e3e3;
+  border-radius: 20px;
+  padding: 10px 20px;
 `;
 
 export const StyledLink = styled(Link)`
@@ -24,9 +35,10 @@ export const StyledLink = styled(Link)`
 
 export const List = styled.ul`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   padding: 0;
+  margin: 2rem;
+  gap: 1rem;
 `;
 
 export const PalletteList = styled.ul`
