@@ -22,6 +22,10 @@ const CalltoActionButton = styled.button`
   padding: 10px 20px;
 `;
 
+const CopyrightButton = styled(CalltoActionButton)`
+  bottom: 20px;
+`;
+
 export default function Spotlight({ image }) {
   const [animationKey, setAnimationKey] = useState(0);
   return (
@@ -39,6 +43,11 @@ export default function Spotlight({ image }) {
         This is image is from <strong>{image.artist}</strong>. <br></br>Do you
         want to see more?
       </CalltoActionButton>
+      <CopyrightButton>
+        <small>
+          Made with ♥ by<br></br>Mareike, Bruno, Şevket & Jan-Philipp
+        </small>
+      </CopyrightButton>
     </FlexCenter>
   );
 }
