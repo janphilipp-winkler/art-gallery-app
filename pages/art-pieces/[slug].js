@@ -1,39 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
-import styled, { keyframes } from "styled-components";
-import Image from "next/image";
 import useLocalStorageState from "use-local-storage-state";
 import DetailsNavigation from "@/components/DetailsNavigation";
 import DetailsButton from "@/components/DetailsButton";
 import DetailsCard from "@/components/DetailsCard";
-
-const OverflowHidden = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: -1;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-`;
-
-const zoomIn = keyframes`
-  0% {
-    transform: scale(1.2);
-    overflow: hidden;
-  }
-  100% {
-    transform: scale(1);
-    overflow: hidden;
-  }
-`;
-
-export const BackgroundImage = styled(Image)`
-  width: 100%;
-  height: 100%;
-  filter: ${(props) => (props.show ? "blur(50px)" : "blur(0px)")};
-  animation: ${zoomIn} 0.5s linear;
-`;
+import BackgroundImage from "@/components/BackgroundImage";
 
 export default function Details({ pieces, favorites, setFavorites }) {
   const router = useRouter();
@@ -63,15 +34,6 @@ export default function Details({ pieces, favorites, setFavorites }) {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
-  // animationKey is a climbing number that gets updated every time image changes, then gets attached to the image component, which rerenders and the animation gets called once again
-  const [animationKey, setAnimationKey] = useState(0);
-
-  useEffect(() => {
-    if (pieceDetails.slug) {
-      setAnimationKey((prevKey) => prevKey + 1);
-    }
-  }, [pieceDetails.slug]);
 
   // useEffect gets slug, finds corresponding image, finds corresponding comments, counts them and updates the CommentCounter
 
@@ -121,24 +83,14 @@ export default function Details({ pieces, favorites, setFavorites }) {
     setShowCommentCard(!showCommentCard);
   }
 
-  const { name, artist, year } = pieceDetails;
-
   return (
     <>
       {pieceDetails.slug && (
         <>
-          <OverflowHidden>
-            <BackgroundImage
-              key={animationKey}
-              show={showCommentCard}
-              src={pieceDetails.imageSource}
-              loading="eager"
-              layout="fill"
-              objectFit="cover"
-              objectPosition="center"
-              alt={`${name} - Artist: ${artist} - Year: ${year}`}
-            />{" "}
-          </OverflowHidden>
+          <BackgroundImage
+            pieceDetails={pieceDetails}
+            showCommentCard={showCommentCard}
+          />
           <div ref={cardRef}>
             <DetailsCard
               pieceDetails={pieceDetails}

@@ -1,6 +1,5 @@
 import styled from "styled-components";
-import { useState } from "react";
-import { BackgroundImage } from "@/pages/art-pieces/[slug]";
+import BackgroundImage from "../BackgroundImage";
 
 const FlexCenter = styled.div`
   display: flex;
@@ -29,18 +28,9 @@ const CopyrightButton = styled(CalltoActionButton)`
 `;
 
 export default function Spotlight({ image }) {
-  const [animationKey, setAnimationKey] = useState(0);
   return (
     <FlexCenter>
-      <BackgroundImage
-        key={animationKey}
-        src={image.imageSource}
-        loading="eager"
-        layout="fill"
-        objectFit="cover"
-        objectPosition="center"
-        alt={`${image.name} - Artist: ${image.artist} - Year: ${image.year}`}
-      ></BackgroundImage>
+      <BackgroundImage pieceDetails={image} />
       <CalltoActionButton as="a" href={`/art-pieces/${image.slug}`}>
         This is image is from <strong>{image.artist}</strong>. <br></br>Do you
         want to see more?
