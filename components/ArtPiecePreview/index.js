@@ -38,6 +38,10 @@ const CommentCounter = styled.span`
   font-size: 10px;
 `;
 
+const StyledH3 = styled.h3`
+  margin-top: 0;
+`;
+
 export default function ArtPiecePreview({
   image,
   favorites,
@@ -56,7 +60,7 @@ export default function ArtPiecePreview({
     <ListItem isFlipped={isFlipped} flipDirection="horizontal">
       <div>
         <GridItemLinkBox href={`/art-pieces/${image.slug}`}>
-          <h3>{image.name}</h3>
+          <StyledH3>{image.name}</StyledH3>
           <p>by {image.artist}</p>
           {commentCount > 0 && <CommentCounter>{commentCount}</CommentCounter>}
         </GridItemLinkBox>
