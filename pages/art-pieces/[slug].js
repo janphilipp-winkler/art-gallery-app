@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import styled, { keyframes } from "styled-components";
 import Image from "next/image";
@@ -39,6 +39,22 @@ export default function Details({ pieces, favorites, setFavorites }) {
   });
 
   const [showCommentCard, setShowCommentCard] = useState(false);
+  const cardRef = useRef(null);
+
+  // handles closing of DetailsCard when clicking outside of it
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (cardRef.current && !cardRef.current.contains(event.target)) {
+        setShowCommentCard(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   // animationKey is a climbing number that gets updated every time image changes, then gets attached to the image component, which rerenders and the animation gets called once again
   const [animationKey, setAnimationKey] = useState(0);
@@ -113,13 +129,15 @@ export default function Details({ pieces, favorites, setFavorites }) {
             objectPosition="center"
             alt={`${name} - Artist: ${artist} - Year: ${year}`}
           />{" "}
-          <DetailsCard
-            pieceDetails={pieceDetails}
-            showCommentCard={showCommentCard}
-            onAddComment={handleAddComment}
-            favorites={favorites}
-            setFavorites={setFavorites}
-          />
+          <div ref={cardRef}>
+            <DetailsCard
+              pieceDetails={pieceDetails}
+              showCommentCard={showCommentCard}
+              onAddComment={handleAddComment}
+              favorites={favorites}
+              setFavorites={setFavorites}
+            />
+          </div>
           <DetailsButton
             showCommentCard={showCommentCard}
             onShowCommentCard={handleShowCommentCard}
