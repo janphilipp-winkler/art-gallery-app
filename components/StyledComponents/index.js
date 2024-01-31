@@ -16,11 +16,14 @@ export const NavLinks = styled.nav`
 `;
 
 export const MenuButton = styled.button`
-  background-color: white;
+  background-color: var(--btn-background);
   color: black;
-  border: 1px solid #e3e3e3;
+  border: none;
   border-radius: 20px;
-  padding: 10px 20px;
+  padding: 0.5em 1em;
+  display: grid;
+  place-items: center;
+  text-decoration: none;
 `;
 
 export const StyledLink = styled(Link)`
