@@ -5,7 +5,8 @@ import Link from "next/link";
 const DivContainer = styled.div`
   position: relative;
   display: inline-block;
-  width: max-content;
+  margin: 0;
+  padding: 0;
 `;
 const Svg = styled.svg`
   position: absolute;
@@ -13,6 +14,8 @@ const Svg = styled.svg`
   right: 0;
   height: 35px; /* Adjust size as needed */
   width: 35px;
+  margin: 0;
+  padding: 0;
 `;
 
 const GridItemLinkBox = styled(Link)`
