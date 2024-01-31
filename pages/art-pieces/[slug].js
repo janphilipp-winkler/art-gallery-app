@@ -10,9 +10,11 @@ import DetailsCard from "@/components/DetailsCard";
 const zoomIn = keyframes`
   0% {
     transform: scale(1.2);
+    overflow: hidden;
   }
   100% {
     transform: scale(1);
+    overflow: hidden;
   }
 `;
 
