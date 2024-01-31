@@ -22,12 +22,14 @@ const GridItemLinkBox = styled(Link)`
   }
 `;
 
-const IsLikedElement = styled.span`
-  background-color: red;
-  color: white;
-  border-radius: 50%;
-  padding: 4px 5px;
-  font-size: 10px;
+const RelativeDiv = styled.div`
+  position: relative;
+`;
+
+const StyledButton = styled.button`
+  position: absolute;
+  bottom: 10px;
+  left: 0;
 `;
 
 const CommentCounter = styled.span`
@@ -38,12 +40,40 @@ const CommentCounter = styled.span`
   font-size: 10px;
 `;
 
+const StyledH3 = styled.h3`
+  margin-top: 0;
+`;
+
+const StyledCardBack = styled.div`
+  position: relative;
+  height: ${(props) => props.$image.dimensions.height * 0.1}px;
+  width: ${(props) => props.$image.dimensions.width * 0.1}px;
+  background-size: contain;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("${(props) => props.$image.imageSource}");
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.2;
+    z-index: -1;
+    transform: scaleX(-1);
+  }
+`;
+
 export default function ArtPiecePreview({
   image,
   favorites,
   setFavorites,
   removeItem,
 }) {
+  console.log(image);
   const [isLiked, setIsLiked] = useState(false);
   const [commentCount, setCommentCount] = useState(0);
   const [isFlipped, setIsFlipped] = useState(true);
@@ -54,15 +84,19 @@ export default function ArtPiecePreview({
 
   return (
     <ListItem isFlipped={isFlipped} flipDirection="horizontal">
-      <div>
-        <GridItemLinkBox href={`/art-pieces/${image.slug}`}>
-          <h3>{image.name}</h3>
-          <p>by {image.artist}</p>
-          {commentCount > 0 && <CommentCounter>{commentCount}</CommentCounter>}
+      <RelativeDiv>
+        <GridItemLinkBox href={`art-pieces/${image.slug}`}>
+          <StyledCardBack $image={image}>
+            <StyledH3>{image.name}</StyledH3>
+            <p>by {image.artist}</p>
+            {commentCount > 0 && (
+              <CommentCounter>{commentCount}</CommentCounter>
+            )}
+          </StyledCardBack>
         </GridItemLinkBox>
-        <button onClick={toggleFlip}>Click to flip</button>
-      </div>
-      <div>
+        <StyledButton onClick={toggleFlip}>Click to flip</StyledButton>
+      </RelativeDiv>
+      <RelativeDiv>
         <ImageContainer
           href={image.slug}
           id={image.slug}
@@ -78,8 +112,8 @@ export default function ArtPiecePreview({
           setFavorites={setFavorites}
           removeItem={removeItem}
         />
-        <button onClick={toggleFlip}>Click to flip</button>
-      </div>
+        <StyledButton onClick={toggleFlip}>Click to flip</StyledButton>
+      </RelativeDiv>
     </ListItem>
   );
 }
