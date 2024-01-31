@@ -4,10 +4,11 @@ import ColorPalette from "../ColorPalette";
 import CommentSection from "../CommentSection";
 import ImageContainer from "../ImageContainer";
 import DetailsButton from "../DetailsButton";
+import DetailsCardHeader from "../DetailsCardHeader";
 
 const CommentCard = styled.div`
   position: fixed;
-  bottom: ${(props) => (props.show ? "0" : "-100%")};
+  bottom: ${(props) => (props.show ? "0" : "-69vh")};
   left: 50%;
   transform: translateX(-50%);
   width: 70%;
@@ -32,16 +33,6 @@ const ImageInCommentCard = styled(ImageContainer)`
   height: auto;
 `;
 
-const Header = styled.div`
-  position: sticky;
-  top: 0%;
-  left: 0%;
-  height: 80px;
-  width: 100%;
-  background-color: red;
-  z-index: 999;
-`;
-
 export default function DetailsCard({
   pieceDetails,
   showCommentCard,
@@ -56,13 +47,11 @@ export default function DetailsCard({
 
   return (
     <CommentCard show={showCommentCard}>
-      <Header>
-        <DetailsButton
-          showCommentCard={showCommentCard}
-          onShowCommentCard={onShowCommentCard}
-          pieceDetails={pieceDetails}
-        />
-      </Header>
+      <DetailsCardHeader
+        showCommentCard={showCommentCard}
+        onShowCommentCard={onShowCommentCard}
+        pieceDetails={pieceDetails}
+      />
       <ContentWrapper>
         <div>
           <ArtPieceDetailedInfo piece={pieceDetails} />

@@ -130,7 +130,7 @@ export default function Details({ pieces, favorites, setFavorites }) {
             objectPosition="center"
             alt={`${name} - Artist: ${artist} - Year: ${year}`}
           />{" "}
-          <>
+          <div ref={cardRef}>
             <DetailsCard
               pieceDetails={pieceDetails}
               showCommentCard={showCommentCard}
@@ -139,12 +139,12 @@ export default function Details({ pieces, favorites, setFavorites }) {
               setFavorites={setFavorites}
               onShowCommentCard={handleShowCommentCard}
             />
-          </>
-          <DetailsButton
+          </div>
+          {/* <DetailsButton
             showCommentCard={showCommentCard}
             onShowCommentCard={handleShowCommentCard}
             pieceDetails={pieceDetails}
-          />
+          /> */}
           <DetailsNavigation
             showCommentCard={showCommentCard}
             onNavigation={handleNavigation}
