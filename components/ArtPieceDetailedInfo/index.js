@@ -16,8 +16,6 @@ export default function ArtPieceDetailedInfo({ piece }) {
   const { name, year, artist, genre, dimensions, slug, colors } = piece;
   const { width, height, type } = dimensions;
 
-  console.log(colors);
-
   return (
     <>
       <DetailsHeader
