@@ -2,8 +2,8 @@ import { MenuButton, NavLinks } from "../StyledComponents";
 import styled from "styled-components";
 
 const Svg = styled.svg`
-  height: 35px;
-  width: 35px;
+  height: 25px;
+  width: 25px;
 `;
 
 export default function Navigation() {
