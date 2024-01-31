@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import CloseIcon from "@mui/icons-material/Close";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 
 const StyledDetailsButton = styled.button`
   position: absolute;
@@ -32,11 +34,13 @@ const Header = styled.div`
   left: 0%;
   height: 82px;
   width: 100%;
-  background-color: red;
+  background-color: white;
+  border-bottom: 1px solid black;
   z-index: 999;
   display: flex;
-  align-items: center;
+  align-items: top;
   justify-content: space-between;
+  padding-top: 10px;
 `;
 
 export default function DetailsCardHeader({
@@ -52,19 +56,25 @@ export default function DetailsCardHeader({
       <div
         style={{
           display: "flex",
-          alignItems: "center",
+          alignItems: "start",
           justifyContent: "center",
         }}
       >
-        <p>{name}</p>
+        <p style={{ padding: 0, margin: 0 }}>{name}</p>
         {comments.length > 0 && <CommentCounter>{counter}</CommentCounter>}
         {isFavorite === true && (
           <CommentCounter style={{ padding: "4px 5px" }}>♥</CommentCounter>
         )}
       </div>
-      <button show={showCommentCard} onClick={onShowCommentCard}>
-        {showCommentCard ? `⬇️` : `⬆️`}
-      </button>
+      {showCommentCard === true ? (
+        <CloseIcon onClick={onShowCommentCard} />
+      ) : (
+        <ArrowUpwardIcon onClick={onShowCommentCard} />
+      )}
+      {/* <button show={showCommentCard} onClick={onShowCommentCard}> */}
+      {/* <CloseIcon show={showCommentCard} onClick={onShowCommentCard} /> */}
+      {/* {showCommentCard ? `⬇️` : `⬆️`}
+      </button> */}
     </Header>
   );
 }
