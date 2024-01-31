@@ -18,10 +18,10 @@ const Svg = styled.svg`
 const GridItemLinkBox = styled(Link)`
   text-decoration: none;
   color: black;
-
-  &:hover {
-    text-decoration: underline;
-  }
+  margin: 0;
+  padding: 0;
+  width: 0px;
+  height: 0px;
 `;
 
 export default function ImageContainer({
