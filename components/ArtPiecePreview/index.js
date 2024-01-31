@@ -42,12 +42,35 @@ const StyledH3 = styled.h3`
   margin-top: 0;
 `;
 
+const StyledCardBack = styled.div`
+  position: relative;
+  height: ${(props) => props.$image.dimensions.height * 0.1}px;
+  width: ${(props) => props.$image.dimensions.width * 0.1}px;
+  background-size: contain;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("${(props) => props.$image.imageSource}");
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.2;
+    z-index: -1;
+  }
+`;
+
 export default function ArtPiecePreview({
   image,
   favorites,
   setFavorites,
   removeItem,
 }) {
+  console.log(image);
   const [isLiked, setIsLiked] = useState(false);
   const [commentCount, setCommentCount] = useState(0);
   const [isFlipped, setIsFlipped] = useState(true);
@@ -58,14 +81,14 @@ export default function ArtPiecePreview({
 
   return (
     <ListItem isFlipped={isFlipped} flipDirection="horizontal">
-      <div>
+      <StyledCardBack $image={image}>
         <GridItemLinkBox href={`/art-pieces/${image.slug}`}>
           <StyledH3>{image.name}</StyledH3>
           <p>by {image.artist}</p>
           {commentCount > 0 && <CommentCounter>{commentCount}</CommentCounter>}
         </GridItemLinkBox>
         <button onClick={toggleFlip}>Click to flip</button>
-      </div>
+      </StyledCardBack>
       <div>
         <ImageContainer
           href={image.slug}

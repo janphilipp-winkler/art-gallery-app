@@ -36,6 +36,7 @@ export default function ImageContainer({
   placeholder,
   favorites,
   setFavorites,
+  opacity,
 }) {
   function handleFavClick(id) {
     const newFavorites = { ...favorites };
@@ -54,6 +55,7 @@ export default function ImageContainer({
           blur={blur ? blur : ""}
           blurDataURL={blurDataURL ? blurDataURL : ""}
           placeholder={placeholder ? placeholder : ""}
+          opacity={opacity ? opacity : "100%"}
         />
       </GridItemLinkBox>
       <Svg
