@@ -2,6 +2,8 @@ import { useState } from "react";
 import styled from "styled-components";
 import ReactCardFlip from "react-card-flip";
 import ImageContainer from "../ImageContainer";
+import RotateLeftIcon from "@mui/icons-material/RotateLeft";
+import RotateRightIcon from "@mui/icons-material/RotateRight";
 
 const ListItem = styled(ReactCardFlip)`
   display: grid;
@@ -18,7 +20,16 @@ const StyledDiv = styled.div`
 const StyledButton = styled.button`
   position: absolute;
   bottom: 10px;
-  left: 0;
+  right: 5px;
+  background-color: white;
+  border: none;
+  border-radius: 2rem;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const CommentCounter = styled.span`
@@ -82,7 +93,9 @@ export default function ArtPiecePreview({
           <p>Genre: {image.genre}</p>
           {commentCount > 0 && <CommentCounter>{commentCount}</CommentCounter>}
         </StyledCardBack>
-        <StyledButton onClick={toggleFlip}>Click to flip</StyledButton>
+        <StyledButton onClick={toggleFlip}>
+          <RotateLeftIcon />
+        </StyledButton>
       </StyledDiv>
       <StyledDiv>
         <ImageContainer
@@ -100,7 +113,9 @@ export default function ArtPiecePreview({
           setFavorites={setFavorites}
           removeItem={removeItem}
         />
-        <StyledButton onClick={toggleFlip}>Click to flip</StyledButton>
+        <StyledButton onClick={toggleFlip}>
+          <RotateRightIcon />
+        </StyledButton>
       </StyledDiv>
     </ListItem>
   );
