@@ -38,16 +38,8 @@ export default function DetailsCard({
   favorites,
   setFavorites,
 }) {
-  const {
-    isFavorite,
-    colors,
-    imageSource,
-    dimensions,
-    name,
-    artist,
-    year,
-    slug,
-  } = pieceDetails;
+  const { colors, imageSource, dimensions, name, artist, year, slug } =
+    pieceDetails;
   const { height, width } = dimensions;
 
   return (
