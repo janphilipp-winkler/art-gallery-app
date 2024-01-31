@@ -1,6 +1,4 @@
-import { useState, useEffect } from "react";
-import Image from "next/image";
-import Link from "next/link";
+import { useState } from "react";
 import styled from "styled-components";
 import ReactCardFlip from "react-card-flip";
 import ImageContainer from "../ImageContainer";
@@ -37,10 +35,11 @@ const StyledH3 = styled.h3`
 
 const StyledCardBack = styled.div`
   position: relative;
-  height: ${(props) => props.$image.dimensions.height * 0.1}px;
-  width: ${(props) => props.$image.dimensions.width * 0.1}px;
+  min-height: ${(props) => props.$image.dimensions.height * 0.1}px;
+  min-width: ${(props) => props.$image.dimensions.width * 0.1}px;
   background-size: contain;
   overflow: hidden;
+  padding-bottom: 25px;
 
   &::before {
     content: "";
@@ -72,13 +71,15 @@ export default function ArtPiecePreview({
   function toggleFlip() {
     setIsFlipped(!isFlipped);
   }
-
+  console.log(image);
   return (
     <ListItem isFlipped={isFlipped} flipDirection="horizontal">
       <StyledDiv>
         <StyledCardBack $image={image}>
           <StyledH3>{image.name}</StyledH3>
-          <p>by {image.artist}</p>
+          <p>Artist: {image.artist}</p>
+          <p>Year: {image.year}</p>
+          <p>Genre: {image.genre}</p>
           {commentCount > 0 && <CommentCounter>{commentCount}</CommentCounter>}
         </StyledCardBack>
         <StyledButton onClick={toggleFlip}>Click to flip</StyledButton>
