@@ -7,6 +7,16 @@ import DetailsNavigation from "@/components/DetailsNavigation";
 import DetailsButton from "@/components/DetailsButton";
 import DetailsCard from "@/components/DetailsCard";
 
+const OverflowHidden = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+`;
+
 const zoomIn = keyframes`
   0% {
     transform: scale(1.2);
@@ -19,12 +29,8 @@ const zoomIn = keyframes`
 `;
 
 export const BackgroundImage = styled(Image)`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: -1;
+  width: 100%;
+  height: 100%;
   filter: ${(props) => (props.show ? "blur(50px)" : "blur(0px)")};
   animation: ${zoomIn} 0.5s linear;
 `;
@@ -105,16 +111,18 @@ export default function Details({ pieces, favorites, setFavorites }) {
     <>
       {pieceDetails.slug && (
         <>
-          <BackgroundImage
-            key={animationKey}
-            show={showCommentCard}
-            src={pieceDetails.imageSource}
-            loading="eager"
-            layout="fill"
-            objectFit="cover"
-            objectPosition="center"
-            alt={`${name} - Artist: ${artist} - Year: ${year}`}
-          />{" "}
+          <OverflowHidden>
+            <BackgroundImage
+              key={animationKey}
+              show={showCommentCard}
+              src={pieceDetails.imageSource}
+              loading="eager"
+              layout="fill"
+              objectFit="cover"
+              objectPosition="center"
+              alt={`${name} - Artist: ${artist} - Year: ${year}`}
+            />
+          </OverflowHidden>
           <DetailsCard
             pieceDetails={pieceDetails}
             showCommentCard={showCommentCard}
