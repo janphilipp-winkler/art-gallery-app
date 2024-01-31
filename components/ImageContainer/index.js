@@ -12,8 +12,8 @@ const Svg = styled.svg`
   position: absolute;
   top: 0;
   right: 0;
-  height: 35px; /* Adjust size as needed */
-  width: 35px;
+  height: 30px;
+  width: 30px;
   margin: 0;
   padding: 0;
 `;
