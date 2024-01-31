@@ -12,18 +12,9 @@ const ListItem = styled(ReactCardFlip)`
   border: 1px solid red;
 `;
 
-const GridItemLinkBox = styled(Link)`
-  text-decoration: none;
-  color: black;
-  /* border: 1px solid black; */
-
-  &:hover {
-    text-decoration: underline;
-  }
-`;
-
-const RelativeDiv = styled.div`
+const StyledDiv = styled.div`
   position: relative;
+  display: inline-block;
 `;
 
 const StyledButton = styled.button`
@@ -84,19 +75,15 @@ export default function ArtPiecePreview({
 
   return (
     <ListItem isFlipped={isFlipped} flipDirection="horizontal">
-      <RelativeDiv>
-        <GridItemLinkBox href={`art-pieces/${image.slug}`}>
-          <StyledCardBack $image={image}>
-            <StyledH3>{image.name}</StyledH3>
-            <p>by {image.artist}</p>
-            {commentCount > 0 && (
-              <CommentCounter>{commentCount}</CommentCounter>
-            )}
-          </StyledCardBack>
-        </GridItemLinkBox>
+      <StyledDiv>
+        <StyledCardBack $image={image}>
+          <StyledH3>{image.name}</StyledH3>
+          <p>by {image.artist}</p>
+          {commentCount > 0 && <CommentCounter>{commentCount}</CommentCounter>}
+        </StyledCardBack>
         <StyledButton onClick={toggleFlip}>Click to flip</StyledButton>
-      </RelativeDiv>
-      <RelativeDiv>
+      </StyledDiv>
+      <StyledDiv>
         <ImageContainer
           href={image.slug}
           id={image.slug}
@@ -113,7 +100,7 @@ export default function ArtPiecePreview({
           removeItem={removeItem}
         />
         <StyledButton onClick={toggleFlip}>Click to flip</StyledButton>
-      </RelativeDiv>
+      </StyledDiv>
     </ListItem>
   );
 }
