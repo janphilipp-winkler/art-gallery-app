@@ -48,7 +48,7 @@ export default function DetailsCard({
   onAddComment,
   favorites,
   setFavorites,
-  handleShowCommentCard,
+  onShowCommentCard,
 }) {
   const { colors, imageSource, dimensions, name, artist, year, slug } =
     pieceDetails;
@@ -59,7 +59,7 @@ export default function DetailsCard({
       <Header>
         <DetailsButton
           showCommentCard={showCommentCard}
-          onShowCommentCard={handleShowCommentCard}
+          onShowCommentCard={onShowCommentCard}
           pieceDetails={pieceDetails}
         />
       </Header>
