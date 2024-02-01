@@ -12,7 +12,6 @@ export default function Details({ pieces, favorites, setFavorites }) {
 
   const [pieceDetails, setPieceDetails] = useLocalStorageState("pieceDetails", {
     defaultValue: {
-      comments: [],
       isFavorite: false,
     },
   });
@@ -40,21 +39,11 @@ export default function Details({ pieces, favorites, setFavorites }) {
   useEffect(() => {
     if (slug) {
       const currentImage = pieces.find((piece) => piece.slug === slug);
-      const storedComments = JSON.parse(localStorage.getItem(slug)) || [];
       const storedFavorite = favorites[slug];
-      console.log(
-        "comments: ",
-        storedComments,
-        "counter: ",
-        storedComments.length,
-        "isFavorite: ",
-        storedFavorite
-      );
+      console.log("isFavorite: ", storedFavorite);
       setPieceDetails((prevPieceDetails) => ({
         ...prevPieceDetails,
         ...currentImage,
-        comments: storedComments,
-        counter: storedComments.length,
         isFavorite: storedFavorite,
       }));
     }
@@ -71,13 +60,30 @@ export default function Details({ pieces, favorites, setFavorites }) {
 
   //comment stuff
 
-  function handleAddComment(comment) {
-    setPieceDetails((prevPieceDetails) => ({
-      ...prevPieceDetails,
-      comments: [comment, ...prevPieceDetails.comments],
-      counter: prevPieceDetails.counter + 1,
-    }));
-  }
+  const initialComments = pieces.map((piece) => {
+    return { id: piece.slug, comments: [] };
+  });
+  console.log("mareike: ", initialComments);
+
+  const [comments, setComments, { removeItem, isPersistent }] =
+    useLocalStorageState("comments", {
+      defaultValue: initialComments,
+    });
+
+  // Function to update state with new comment
+
+  const handleAddComment = (comment, pictureId) => {
+    const updatedPieces = comments.map((piece) => {
+      if (piece.id === pictureId) {
+        return {
+          ...piece,
+          comments: [comment, ...piece.comments],
+        };
+      }
+      return piece;
+    });
+    setComments(updatedPieces);
+  };
 
   function handleShowCommentCard() {
     console.log("click");
@@ -100,6 +106,7 @@ export default function Details({ pieces, favorites, setFavorites }) {
               favorites={favorites}
               setFavorites={setFavorites}
               onShowCommentCard={handleShowCommentCard}
+              comments={comments}
             />
           </div>
           {/* <DetailsButton

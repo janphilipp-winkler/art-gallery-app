@@ -77,7 +77,7 @@ export default function ArtPiecePreview({
 }) {
   console.log(image);
   const [isLiked, setIsLiked] = useState(false);
-  const [commentCount, setCommentCount] = useState(0);
+  // const [commentCount, setCommentCount] = useState(0);
   const [isFlipped, setIsFlipped] = useState(true);
 
   function toggleFlip() {
@@ -92,7 +92,7 @@ export default function ArtPiecePreview({
           <p>Artist: {image.artist}</p>
           <p>Year: {image.year}</p>
           <p>Genre: {image.genre}</p>
-          {commentCount > 0 && <CommentCounter>{commentCount}</CommentCounter>}
+          {/* {commentCount > 0 && <CommentCounter>{commentCount}</CommentCounter>} */}
         </StyledCardBack>
         <StyledButton onClick={toggleFlip}>
           <RotateLeftIcon />

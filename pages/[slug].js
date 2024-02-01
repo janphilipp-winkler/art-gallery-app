@@ -3,6 +3,7 @@ import ArtPiecePreview from "@/components/ArtPiecePreview";
 import { List } from "@/components/StyledComponents";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import useLocalStorageState from "use-local-storage-state";
 
 export default function ArtPieces({ pieces, setFavorites, favorites }) {
   const router = useRouter();
@@ -18,6 +19,7 @@ export default function ArtPieces({ pieces, setFavorites, favorites }) {
   }, [favorites]);
 
   console.log(likedPieces);
+
   if (slug === "art-pieces") {
     return (
       <List>

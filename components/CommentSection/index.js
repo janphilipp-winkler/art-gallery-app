@@ -1,6 +1,13 @@
 import { nanoid } from "nanoid";
+import { useEffect, useState } from "react";
 
-export default function CommentSection({ onAddComment, pieceDetails }) {
+export default function CommentSection({
+  pieceDetails,
+  onAddComment,
+  comments,
+}) {
+  const [sortedComments, setSortedComments] = useState([]);
+
   function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -9,21 +16,31 @@ export default function CommentSection({ onAddComment, pieceDetails }) {
       text: data.commentText,
       timestamp: new Date().toISOString(),
     };
-    onAddComment(newComment);
+    onAddComment(newComment, pieceDetails.slug);
     event.target.reset();
   }
 
-  const sortedComments = pieceDetails.comments.slice().sort((a, b) => {
-    return new Date(b.timestamp) - new Date(a.timestamp);
-  });
+  // update comments when new comment is added or slug pieceDetails changed
+
+  useEffect(() => {
+    let filteredComments = [];
+    const piece = comments.find((item) => item.id === pieceDetails.slug);
+    if (piece && piece.comments) {
+      filteredComments = piece.comments;
+    }
+    setSortedComments(filteredComments);
+  }, [comments, pieceDetails]);
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form
+        onSubmit={(event) => {
+          handleSubmit(event);
+        }}
+      >
         <input
           type="text"
           name="commentText"
-          //onChange={handleCommentChange}
           placeholder="Add a comment..."
           required
         />
