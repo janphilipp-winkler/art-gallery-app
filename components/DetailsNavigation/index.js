@@ -1,10 +1,18 @@
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { NavigationButton } from "../StyledComponents";
+import { useImageHasLoadedStore } from "@/Store/ImageIsLoaded";
 
 export default function DetailsNavigation({ showCommentCard, onNavigation }) {
-  const goToNextPage = () => onNavigation("next");
-  const goToPreviousPage = () => onNavigation("previous");
+  const { handleImageHasNotLoaded } = useImageHasLoadedStore();
+  const goToNextPage = () => {
+    onNavigation("next");
+    handleImageHasNotLoaded();
+  };
+  const goToPreviousPage = () => {
+    onNavigation("previous");
+    handleImageHasNotLoaded();
+  };
 
   return (
     <>

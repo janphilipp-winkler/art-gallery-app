@@ -1,9 +1,7 @@
 import { create } from "zustand";
 
-export const useImageIsLoadedStore = create((set) => ({
+export const useImageHasLoadedStore = create((set) => ({
   loaded: false,
-  handleImageIsLoaded: () =>
-    set((state) => ({ loaded: state.loaded === true })),
-  handleImageIsNotLoaded: () =>
-    set((state) => ({ loaded: state.loaded === false })),
+  handleImageHasLoaded: () => set(() => ({ loaded: true })),
+  handleImageHasNotLoaded: () => set(() => ({ loaded: false })),
 }));

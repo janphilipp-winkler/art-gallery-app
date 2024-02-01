@@ -96,6 +96,7 @@ export const StyledBackgroundImage = styled(Image)`
   object-fit: cover;
   filter: ${(props) => (props.show ? "blur(50px)" : "blur(0px)")};
   animation: ${zoomIn} 0.5s linear;
+  display: ${(props) => (props.loaded ? "block" : "none")};
 `;
 
 export const OverflowHidden = styled.div`
