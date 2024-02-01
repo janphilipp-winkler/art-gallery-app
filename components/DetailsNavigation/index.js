@@ -25,10 +25,18 @@ export default function DetailsNavigation({ showCommentCard, onNavigation }) {
 
   return (
     <>
-      <NavigationButton show={showCommentCard} onClick={goToPreviousPage}>
+      <NavigationButton
+        show={showCommentCard}
+        onClick={goToPreviousPage}
+        left={"true"}
+      >
         <KeyboardArrowLeftIcon />
       </NavigationButton>
-      <NavigationButton show={showCommentCard} onClick={goToNextPage} right>
+      <NavigationButton
+        show={showCommentCard}
+        onClick={goToNextPage}
+        right={"true"}
+      >
         <KeyboardArrowRightIcon />
       </NavigationButton>
     </>
