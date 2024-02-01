@@ -17,13 +17,13 @@ export default function BackgroundImage({ pieceDetails, showCommentCard }) {
     <OverflowHidden>
       <StyledBackgroundImage
         key={animationKey}
-        show={showCommentCard}
+        $show={showCommentCard}
         src={imageSource}
         loading="eager"
         fill
         sizes="100vw"
         alt={`${name} - Artist: ${artist} - Year: ${year}`}
-        loaded={loaded}
+        $loaded={loaded}
         onLoad={handleImageHasLoaded}
       />{" "}
     </OverflowHidden>
