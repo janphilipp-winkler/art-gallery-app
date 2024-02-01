@@ -27,16 +27,16 @@ export default function ArtPieceDetailedInfo({ piece }) {
       >
         {name}
       </DetailsHeader>
-      <h5 style={{ margin: 0, padding: 0, marginTop: "20px" }}>Year: {year}</h5>
-      <h5 style={{ margin: 0, padding: 0 }}>Artist: {artist}</h5>
-      <h5 style={{ margin: 0, padding: 0 }}>Genre: {genre}</h5>
-      <h5 style={{ margin: 0, padding: 0 }}>
-        Dimensions: {width} x {height}
-      </h5>
-      <h5 style={{ margin: 0, padding: 0 }}>
+      <p>
+        This piece named <strong>&quot;{name}&quot;</strong> was created by{" "}
+        <strong>{artist}</strong> in the year {year}. It is representative of
+        the <strong>{genre}</strong> genre.
+      </p>
+      <p>
+        Dimensions: {width} x {height} <br />
         Format: {"."}
         {type}
-      </h5>
+      </p>
     </>
   );
 }
