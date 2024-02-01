@@ -25,16 +25,16 @@ export default function ArtPieceDetailedInfo({ piece }) {
       >
         {name}
       </DetailsHeader>
-      <p>Year: {year}</p>
-      <p>Artist: {artist}</p>
-      <p>Genre: {genre}</p>
+
       <p>
-        Dimensions: {width} x {height}
+        This piece named <strong>&quot;{name}&quot;</strong> was created by{" "}
+        <strong>{artist}</strong> in the year {year}. It is representative of
+        the <strong>{genre}</strong> genre.
       </p>
       <p>
+        Dimensions: {width} x {height} <br />
         Format: {"."}
         {type}
-        {slug}
       </p>
     </>
   );
