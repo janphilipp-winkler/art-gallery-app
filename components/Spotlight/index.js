@@ -20,6 +20,7 @@ const CalltoActionButton = styled.button`
   border-radius: 20px;
   padding: 10px 20px;
   text-decoration: none;
+  backdrop-filter: blur(5px);
 `;
 
 const CopyrightButton = styled(CalltoActionButton)`

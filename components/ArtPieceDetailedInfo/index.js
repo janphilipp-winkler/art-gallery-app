@@ -10,6 +10,8 @@ const DetailsHeader = styled.h2`
   );
   background-clip: text;
   color: transparent;
+  margin: 0;
+  padding: 0;
 `;
 
 export default function ArtPieceDetailedInfo({ piece }) {
@@ -25,17 +27,16 @@ export default function ArtPieceDetailedInfo({ piece }) {
       >
         {name}
       </DetailsHeader>
-      <p>Year: {year}</p>
-      <p>Artist: {artist}</p>
-      <p>Genre: {genre}</p>
-      <p>
+      <h5 style={{ margin: 0, padding: 0, marginTop: "20px" }}>Year: {year}</h5>
+      <h5 style={{ margin: 0, padding: 0 }}>Artist: {artist}</h5>
+      <h5 style={{ margin: 0, padding: 0 }}>Genre: {genre}</h5>
+      <h5 style={{ margin: 0, padding: 0 }}>
         Dimensions: {width} x {height}
-      </p>
-      <p>
+      </h5>
+      <h5 style={{ margin: 0, padding: 0 }}>
         Format: {"."}
         {type}
-        {slug}
-      </p>
+      </h5>
     </>
   );
 }

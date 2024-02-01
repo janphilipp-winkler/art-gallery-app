@@ -24,6 +24,7 @@ export const MenuButton = styled.button`
   display: grid;
   place-items: center;
   text-decoration: none;
+  backdrop-filter: blur(5px);
 `;
 
 export const StyledLink = styled(Link)`
@@ -49,13 +50,13 @@ export const PalletteList = styled.ul`
   margin: 0 auto;
   list-style: none;
   display: flex;
-  width: 15rem;
+  width: 10rem;
   border: 2px solid black;
   border-radius: 5px;
 `;
 
 export const PaletteItem = styled.li`
-  height: 6rem;
+  height: 3rem;
   width: 3rem;
   background-color: ${(prop) => prop.color};
 `;
