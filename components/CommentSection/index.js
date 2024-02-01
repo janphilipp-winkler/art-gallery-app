@@ -6,21 +6,10 @@ export default function CommentSection({
   onAddComment,
   comments,
 }) {
+  // Initial state for current comments
   const [sortedComments, setSortedComments] = useState([]);
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData);
-    const newComment = {
-      text: data.commentText,
-      timestamp: new Date().toISOString(),
-    };
-    onAddComment(newComment, pieceDetails.slug);
-    event.target.reset();
-  }
-
-  // update comments when new comment is added or slug pieceDetails changed
+  // Update comments when new comment is added or slug pieceDetails changed
 
   useEffect(() => {
     let filteredComments = [];
@@ -30,6 +19,22 @@ export default function CommentSection({
     }
     setSortedComments(filteredComments);
   }, [comments, pieceDetails]);
+
+  // Handle a new comment
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    // Get comment from form an store it with timestamp
+    const formData = new FormData(event.target);
+    const data = Object.fromEntries(formData);
+    const newComment = {
+      text: data.commentText,
+      timestamp: new Date().toISOString(),
+    };
+    // Add the new comment to the right entry in locale storage
+    onAddComment(newComment, pieceDetails.slug);
+    event.target.reset();
+  }
 
   return (
     <div

@@ -1,18 +1,4 @@
-import styled from "styled-components";
-
-const DetailsHeader = styled.h2`
-  font-size: 4rem;
-  background-image: linear-gradient(
-    45deg,
-    ${(props) => props.$bgColorOne},
-    ${(props) => props.$bgColorTwo},
-    ${(props) => props.$bgColorThree}
-  );
-  background-clip: text;
-  color: transparent;
-  margin: 0;
-  padding: 0;
-`;
+import { DetailsHeader } from "../StyledComponents";
 
 export default function ArtPieceDetailedInfo({ piece }) {
   const { name, year, artist, genre, dimensions, slug, colors } = piece;

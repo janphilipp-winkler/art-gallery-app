@@ -20,7 +20,6 @@ export default function SpotlightPage({ pieces, favorites, setFavorites }) {
   return (
     <>
       <Spotlight image={randomPiece} />
-      {/* <ColorPalette colors={randomPiece.colors} /> */}
     </>
   );
 }

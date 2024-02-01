@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import useLocalStorageState from "use-local-storage-state";
 import DetailsNavigation from "@/components/DetailsNavigation";
-import DetailsButton from "@/legacy/DetailsButton";
 import DetailsCard from "@/components/DetailsCard";
 import BackgroundImage from "@/components/BackgroundImage";
 
@@ -105,11 +104,6 @@ export default function Details({ pieces, favorites, setFavorites }) {
               comments={comments}
             />
           </div>
-          {/* <DetailsButton
-            showCommentCard={showCommentCard}
-            onShowCommentCard={handleShowCommentCard}
-            pieceDetails={pieceDetails}
-          /> */}
           <DetailsNavigation
             showCommentCard={showCommentCard}
             onNavigation={handleNavigation}

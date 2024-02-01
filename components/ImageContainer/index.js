@@ -1,31 +1,5 @@
 import Image from "next/image";
-import styled from "styled-components";
-import Link from "next/link";
-
-const DivContainer = styled.div`
-  position: relative;
-  display: inline-block;
-  margin: 0;
-  padding: 0;
-`;
-const Svg = styled.svg`
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 30px;
-  width: 30px;
-  margin: 0;
-  padding: 0;
-`;
-
-const LinkBox = styled(Link)`
-  text-decoration: none;
-  color: black;
-  margin: 0;
-  padding: 0;
-  width: 0px;
-  height: 0px;
-`;
+import { Svg, DivContainer, LinkBox } from "../StyledComponents";
 
 export default function ImageContainer({
   href,
