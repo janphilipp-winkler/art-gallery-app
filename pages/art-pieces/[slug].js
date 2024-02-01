@@ -34,7 +34,7 @@ export default function Details({ pieces, favorites, setFavorites }) {
     };
   }, []);
 
-  // useEffect gets slug, finds corresponding image, finds corresponding comments, counts them and updates the CommentCounter
+  // useEffect gets slug, finds corresponding image,
 
   useEffect(() => {
     if (slug) {
@@ -63,10 +63,9 @@ export default function Details({ pieces, favorites, setFavorites }) {
     return { id: piece.slug, comments: [] };
   });
 
-  const [comments, setComments, { removeItem, isPersistent }] =
-    useLocalStorageState("comments", {
-      defaultValue: initialComments,
-    });
+  const [comments, setComments] = useLocalStorageState("comments", {
+    defaultValue: initialComments,
+  });
 
   // Function to update state with new comment
 

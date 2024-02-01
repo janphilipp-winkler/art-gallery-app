@@ -17,9 +17,6 @@ const StyledDetailsButton = styled.button`
 `;
 
 const CommentCounter = styled.span`
-  /* position: absolute;
-  top: -6px;
-  right: -6px; */
   background-color: blue;
   color: white;
   border-radius: 50%;
