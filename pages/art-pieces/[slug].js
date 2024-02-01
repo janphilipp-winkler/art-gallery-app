@@ -12,7 +12,6 @@ export default function Details({ pieces, favorites, setFavorites }) {
 
   const [pieceDetails, setPieceDetails] = useLocalStorageState("pieceDetails", {
     defaultValue: {
-      // comments: [],
       isFavorite: false,
     },
   });
@@ -40,21 +39,11 @@ export default function Details({ pieces, favorites, setFavorites }) {
   useEffect(() => {
     if (slug) {
       const currentImage = pieces.find((piece) => piece.slug === slug);
-      const storedComments = JSON.parse(localStorage.getItem(slug)) || [];
       const storedFavorite = favorites[slug];
-      console.log(
-        // "comments: ",
-        // storedComments,
-        // "counter: ",
-        // storedComments.length,
-        "isFavorite: ",
-        storedFavorite
-      );
+      console.log("isFavorite: ", storedFavorite);
       setPieceDetails((prevPieceDetails) => ({
         ...prevPieceDetails,
         ...currentImage,
-        // comments: storedComments,
-        // counter: storedComments.length,
         isFavorite: storedFavorite,
       }));
     }
@@ -71,15 +60,6 @@ export default function Details({ pieces, favorites, setFavorites }) {
 
   //comment stuff
 
-  // function handleAddComment(comment) {
-  //   setPieceDetails((prevPieceDetails) => ({
-  //     ...prevPieceDetails,
-  //     comments: [comment, ...prevPieceDetails.comments],
-  //     counter: prevPieceDetails.counter + 1,
-  //   }));
-  // }
-
-  // START
   const initialComments = pieces.map((piece) => {
     return { id: piece.slug, comments: [] };
   });
@@ -90,26 +70,20 @@ export default function Details({ pieces, favorites, setFavorites }) {
       defaultValue: initialComments,
     });
 
+  // Function to update state with new comment
+
   const handleAddComment = (comment, pictureId) => {
-    // Create a new array with updated pieces
     const updatedPieces = comments.map((piece) => {
-      // Find the piece with the matching ID
       if (piece.id === pictureId) {
-        // Add the new comment to the comments array of the matched piece
         return {
           ...piece,
-          comments: [...piece.comments, comment], // Append the new comment
+          comments: [comment, ...piece.comments],
         };
       }
-      // Return the piece unchanged if it does not match the ID
       return piece;
     });
-
-    // Update the pieces state with the new array
     setComments(updatedPieces);
   };
-
-  // END
 
   function handleShowCommentCard() {
     setShowCommentCard(!showCommentCard);
