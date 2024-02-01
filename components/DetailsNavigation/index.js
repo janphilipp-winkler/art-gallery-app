@@ -16,6 +16,7 @@ const NavigationButton = styled.button`
   z-index: 1000;
   display: grid;
   place-items: center;
+  backdrop-filter: blur(5px);
 `;
 
 export default function DetailsNavigation({ showCommentCard, onNavigation }) {
@@ -24,10 +25,18 @@ export default function DetailsNavigation({ showCommentCard, onNavigation }) {
 
   return (
     <>
-      <NavigationButton show={showCommentCard} onClick={goToPreviousPage}>
+      <NavigationButton
+        show={showCommentCard}
+        onClick={goToPreviousPage}
+        left={"true"}
+      >
         <KeyboardArrowLeftIcon />
       </NavigationButton>
-      <NavigationButton show={showCommentCard} onClick={goToNextPage} right>
+      <NavigationButton
+        show={showCommentCard}
+        onClick={goToNextPage}
+        right={"true"}
+      >
         <KeyboardArrowRightIcon />
       </NavigationButton>
     </>

@@ -34,13 +34,12 @@ export default function Details({ pieces, favorites, setFavorites }) {
     };
   }, []);
 
-  // useEffect gets slug, finds corresponding image, finds corresponding comments, counts them and updates the CommentCounter
+  // useEffect gets slug, finds corresponding image,
 
   useEffect(() => {
     if (slug) {
       const currentImage = pieces.find((piece) => piece.slug === slug);
       const storedFavorite = favorites[slug];
-      console.log("isFavorite: ", storedFavorite);
       setPieceDetails((prevPieceDetails) => ({
         ...prevPieceDetails,
         ...currentImage,
@@ -63,12 +62,10 @@ export default function Details({ pieces, favorites, setFavorites }) {
   const initialComments = pieces.map((piece) => {
     return { id: piece.slug, comments: [] };
   });
-  console.log("mareike: ", initialComments);
 
-  const [comments, setComments, { removeItem, isPersistent }] =
-    useLocalStorageState("comments", {
-      defaultValue: initialComments,
-    });
+  const [comments, setComments] = useLocalStorageState("comments", {
+    defaultValue: initialComments,
+  });
 
   // Function to update state with new comment
 
@@ -86,7 +83,6 @@ export default function Details({ pieces, favorites, setFavorites }) {
   };
 
   function handleShowCommentCard() {
-    console.log("click");
     setShowCommentCard(!showCommentCard);
   }
 

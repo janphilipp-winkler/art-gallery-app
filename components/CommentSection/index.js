@@ -32,7 +32,14 @@ export default function CommentSection({
   }, [comments, pieceDetails]);
 
   return (
-    <>
+    <div
+      style={{
+        backgroundColor: "var(--btn-background)",
+        paddingBottom: "40px",
+        padding: "30px",
+      }}
+    >
+      <h2>Leave a comment!</h2>
       <form
         onSubmit={(event) => {
           handleSubmit(event);
@@ -59,6 +66,6 @@ export default function CommentSection({
           </div>
         ))}
       </div>
-    </>
+    </div>
   );
 }

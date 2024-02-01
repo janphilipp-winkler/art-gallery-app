@@ -19,8 +19,6 @@ export default function ArtPieces({ pieces, setFavorites, favorites }) {
     setLikedPieces(filteredPieces);
   }, [favorites]);
 
-  console.log(likedPieces);
-
   if (slug === "art-pieces") {
     return (
       <List>

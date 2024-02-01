@@ -10,6 +10,8 @@ const DetailsHeader = styled.h2`
   );
   background-clip: text;
   color: transparent;
+  margin: 0;
+  padding: 0;
 `;
 
 export default function ArtPieceDetailedInfo({ piece }) {
@@ -25,7 +27,6 @@ export default function ArtPieceDetailedInfo({ piece }) {
       >
         {name}
       </DetailsHeader>
-
       <p>
         This piece named <strong>&quot;{name}&quot;</strong> was created by{" "}
         <strong>{artist}</strong> in the year {year}. It is representative of
