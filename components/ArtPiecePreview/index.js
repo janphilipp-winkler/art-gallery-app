@@ -49,7 +49,6 @@ const StyledCardBack = styled.div`
   position: relative;
   min-height: ${(props) => props.$image.dimensions.height * 0.1}px;
   min-width: ${(props) => props.$image.dimensions.width * 0.1}px;
-  background-size: contain;
   overflow: hidden;
   padding-bottom: 25px;
 
@@ -61,7 +60,7 @@ const StyledCardBack = styled.div`
     right: 0;
     bottom: 0;
     background-image: url("${(props) => props.$image.imageSource}");
-    background-size: contain;
+    background-size: cover;
     background-repeat: no-repeat;
     opacity: 0.2;
     z-index: -1;
