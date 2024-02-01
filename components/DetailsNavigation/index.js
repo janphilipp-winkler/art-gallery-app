@@ -16,6 +16,7 @@ const NavigationButton = styled.button`
   z-index: 1000;
   display: grid;
   place-items: center;
+  backdrop-filter: blur(5px);
 `;
 
 export default function DetailsNavigation({ showCommentCard, onNavigation }) {

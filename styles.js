@@ -8,7 +8,7 @@ export default createGlobalStyle`
   }
 
   :root{
-    --btn-background: rgba(128, 128, 128, 0.7);
+    --btn-background: rgba(244, 244, 244, 0.4);
   }
 
   body {

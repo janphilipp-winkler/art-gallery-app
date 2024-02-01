@@ -7,15 +7,15 @@ import DetailsCardHeader from "../DetailsCardHeader";
 
 const CommentCard = styled.div`
   position: fixed;
-  bottom: ${(props) => (props.show ? "0" : "-69vh")};
+  bottom: ${(props) => (props.show ? "0" : "-71.5vh")};
   left: 50%;
   transform: translateX(-50%);
-  width: 70%;
+  width: 60vw;
   height: 80vh;
-  background-color: white;
   transition: bottom 0.3s ease;
   overflow-y: auto;
-  padding-bottom: 100px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
 `;
 
 const ContentWrapper = styled.div`
@@ -25,10 +25,11 @@ const ContentWrapper = styled.div`
   width: 100%;
   padding: 30px;
   overflow: hidden;
+  background-color: var(--btn-background);
 `;
 
 const ImageInCommentCard = styled(ImageContainer)`
-  width: 20px;
+  width: 100%;
   height: auto;
 `;
 
@@ -53,11 +54,9 @@ export default function DetailsCard({
         pieceDetails={pieceDetails}
       />
       <ContentWrapper>
-        <div>
+        <div style={{ display: "flex", flexDirection: "column" }}>
           <ArtPieceDetailedInfo piece={pieceDetails} />
-          <p>
-            <ColorPalette colors={colors} />
-          </p>
+          <ColorPalette colors={colors} />
         </div>
         <div>
           <ImageInCommentCard
