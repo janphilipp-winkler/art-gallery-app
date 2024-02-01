@@ -1,17 +1,25 @@
 import styled from "styled-components";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 const StyledDetailsButton = styled.button`
   position: absolute;
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: white;
+  background-color: var(--btn-background);
   color: black;
-  border: 1px solid #e3e3e3;
+  border: none;
   border-radius: 20px;
   padding: 10px 20px;
   cursor: pointer;
   z-index: 999;
+`;
+
+const FlexCenter = styled.span`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const CommentCounter = styled.span`
@@ -34,8 +42,16 @@ export default function DetailsButton({
 
   return (
     <StyledDetailsButton show={showCommentCard} onClick={onShowCommentCard}>
-      {showCommentCard ? `${name} ⬇️` : `${name} ⬆️`}
-      {/* {comments.length > 0 && <CommentCounter>{counter}</CommentCounter>} */}
+      {showCommentCard ? (
+        <FlexCenter>
+          {name} <KeyboardArrowDownIcon />
+        </FlexCenter>
+      ) : (
+        <FlexCenter>
+          {name} <KeyboardArrowUpIcon />{" "}
+        </FlexCenter>
+      )}
+      {comments.length > 0 && <CommentCounter>{counter}</CommentCounter>}
       {isFavorite === true && (
         <CommentCounter style={{ right: -20 }}>♥</CommentCounter>
       )}
