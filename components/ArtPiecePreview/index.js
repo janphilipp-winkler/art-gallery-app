@@ -74,7 +74,6 @@ export default function ArtPiecePreview({
   setFavorites,
   removeItem,
 }) {
-  console.log(image);
   const [isLiked, setIsLiked] = useState(false);
   // const [commentCount, setCommentCount] = useState(0);
   const [isFlipped, setIsFlipped] = useState(true);
@@ -82,7 +81,6 @@ export default function ArtPiecePreview({
   function toggleFlip() {
     setIsFlipped(!isFlipped);
   }
-  console.log(image);
   return (
     <ListItem isFlipped={isFlipped} flipDirection="horizontal">
       <StyledDiv>
