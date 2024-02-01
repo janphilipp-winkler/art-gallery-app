@@ -3,7 +3,6 @@ import ArtPieceDetailedInfo from "../ArtPieceDetailedInfo";
 import ColorPalette from "../ColorPalette";
 import CommentSection from "../CommentSection";
 import ImageContainer from "../ImageContainer";
-import DetailsButton from "../DetailsButton";
 import DetailsCardHeader from "../DetailsCardHeader";
 
 const CommentCard = styled.div`

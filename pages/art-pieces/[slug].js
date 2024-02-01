@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import useLocalStorageState from "use-local-storage-state";
 import DetailsNavigation from "@/components/DetailsNavigation";
-import DetailsButton from "@/components/DetailsButton";
+import DetailsButton from "@/legacy/DetailsButton";
 import DetailsCard from "@/components/DetailsCard";
 import BackgroundImage from "@/components/BackgroundImage";
 
