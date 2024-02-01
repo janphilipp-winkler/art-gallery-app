@@ -61,10 +61,10 @@ export default function DetailsCardHeader({
         }}
       >
         <p style={{ padding: 0, margin: 0 }}>{name}</p>
-        {comments.length > 0 && <CommentCounter>{counter}</CommentCounter>}
+        {/* {comments.length > 0 && <CommentCounter>{counter}</CommentCounter>}
         {isFavorite === true && (
           <CommentCounter style={{ padding: "4px 5px" }}>♥</CommentCounter>
-        )}
+        )} */}
       </div>
       {showCommentCard === true ? (
         <CloseIcon onClick={onShowCommentCard} />
