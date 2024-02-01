@@ -1,5 +1,6 @@
-import { Router } from "next/router";
 import styled from "styled-components";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 const NavigationButton = styled.button`
   position: absolute;
@@ -7,12 +8,14 @@ const NavigationButton = styled.button`
   left: ${(props) => (props.right ? "auto" : "20px")};
   right: ${(props) => (props.right ? "20px" : "auto")};
   padding: 10px 20px;
-  background-color: white;
+  background-color: var(--btn-background);
   color: black;
-  border: 1px solid #e3e3e3;
+  border: none;
   border-radius: 20px;
   cursor: pointer;
   z-index: 1000;
+  display: grid;
+  place-items: center;
 `;
 
 export default function DetailsNavigation({ showCommentCard, onNavigation }) {
@@ -22,10 +25,10 @@ export default function DetailsNavigation({ showCommentCard, onNavigation }) {
   return (
     <>
       <NavigationButton show={showCommentCard} onClick={goToPreviousPage}>
-        {"⬅️"}
+        <KeyboardArrowLeftIcon />
       </NavigationButton>
       <NavigationButton show={showCommentCard} onClick={goToNextPage} right>
-        {"➡️"}
+        <KeyboardArrowRightIcon />
       </NavigationButton>
     </>
   );

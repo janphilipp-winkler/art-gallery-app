@@ -14,17 +14,17 @@ const CalltoActionButton = styled.button`
   bottom: 50%;
   left: 50%;
   transform: translateX(-50%);
-  background-color: white;
+  background-color: var(--btn-background);
   color: black;
-  border: 1px solid #e3e3e3;
+  border: none;
   border-radius: 20px;
   padding: 10px 20px;
+  text-decoration: none;
 `;
 
 const CopyrightButton = styled(CalltoActionButton)`
   bottom: 20px;
   text-align: center;
-  opacity: 0.7;
 `;
 
 export default function Spotlight({ image }) {
