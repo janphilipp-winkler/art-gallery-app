@@ -80,6 +80,7 @@ export default function Details({ pieces, favorites, setFavorites }) {
   }
 
   function handleShowCommentCard() {
+    console.log("click");
     setShowCommentCard(!showCommentCard);
   }
 
@@ -98,13 +99,14 @@ export default function Details({ pieces, favorites, setFavorites }) {
               onAddComment={handleAddComment}
               favorites={favorites}
               setFavorites={setFavorites}
+              onShowCommentCard={handleShowCommentCard}
             />
           </div>
-          <DetailsButton
+          {/* <DetailsButton
             showCommentCard={showCommentCard}
             onShowCommentCard={handleShowCommentCard}
             pieceDetails={pieceDetails}
-          />
+          /> */}
           <DetailsNavigation
             showCommentCard={showCommentCard}
             onNavigation={handleNavigation}

@@ -3,16 +3,17 @@ import ArtPieceDetailedInfo from "../ArtPieceDetailedInfo";
 import ColorPalette from "../ColorPalette";
 import CommentSection from "../CommentSection";
 import ImageContainer from "../ImageContainer";
+import DetailsButton from "../DetailsButton";
+import DetailsCardHeader from "../DetailsCardHeader";
 
 const CommentCard = styled.div`
   position: fixed;
-  bottom: ${(props) => (props.show ? "0" : "-100%")};
+  bottom: ${(props) => (props.show ? "0" : "-69vh")};
   left: 50%;
   transform: translateX(-50%);
   width: 70%;
   height: 80vh;
   background-color: white;
-  padding: 30px;
   transition: bottom 0.3s ease;
   overflow-y: auto;
   padding-bottom: 100px;
@@ -23,6 +24,7 @@ const ContentWrapper = styled.div`
   grid-template-columns: 1.5fr 1fr;
   gap: 0rem 2rem;
   width: 100%;
+  padding: 30px;
   overflow: hidden;
 `;
 
@@ -37,6 +39,7 @@ export default function DetailsCard({
   onAddComment,
   favorites,
   setFavorites,
+  onShowCommentCard,
 }) {
   const { colors, imageSource, dimensions, name, artist, year, slug } =
     pieceDetails;
@@ -44,6 +47,11 @@ export default function DetailsCard({
 
   return (
     <CommentCard show={showCommentCard}>
+      <DetailsCardHeader
+        showCommentCard={showCommentCard}
+        onShowCommentCard={onShowCommentCard}
+        pieceDetails={pieceDetails}
+      />
       <ContentWrapper>
         <div>
           <ArtPieceDetailedInfo piece={pieceDetails} />
