@@ -3,7 +3,6 @@ import ArtPiecePreview from "@/components/ArtPiecePreview";
 import { List } from "@/components/StyledComponents";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import useLocalStorageState from "use-local-storage-state";
 import Link from "next/link";
 
 export default function ArtPieces({ pieces, setFavorites, favorites }) {

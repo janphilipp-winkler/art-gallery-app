@@ -1,27 +1,18 @@
 import Navigation from "../Navigation";
-import { MenuButton, NavLinks } from "../StyledComponents";
-import styled from "styled-components";
-
-const ContentWrapper = styled.div`
-  display: flex;
-
-  justify-content: space-between;
-`;
+import { MenuButton, NavLinks, ContentWrapp } from "../StyledComponents";
 
 export default function Layout({ children }) {
   return (
     <>
-      <ContentWrapper>
+      <ContentWrapp>
         <NavLinks>
           <MenuButton as="a" href={"/"}>
             <strong>ART GALLERY</strong>
           </MenuButton>
         </NavLinks>
         <Navigation />
-      </ContentWrapper>
+      </ContentWrapp>
       {children}
     </>
   );
 }
-
-// {/* <StyledLink href={"/"}>{/* <H1>Art Gallery</H1> */}</StyledLink> */}
