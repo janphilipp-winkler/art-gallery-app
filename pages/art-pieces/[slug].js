@@ -12,7 +12,7 @@ export default function Details({ pieces, favorites, setFavorites }) {
 
   const [pieceDetails, setPieceDetails] = useLocalStorageState("pieceDetails", {
     defaultValue: {
-      comments: [],
+      // comments: [],
       isFavorite: false,
     },
   });
@@ -43,18 +43,18 @@ export default function Details({ pieces, favorites, setFavorites }) {
       const storedComments = JSON.parse(localStorage.getItem(slug)) || [];
       const storedFavorite = favorites[slug];
       console.log(
-        "comments: ",
-        storedComments,
-        "counter: ",
-        storedComments.length,
+        // "comments: ",
+        // storedComments,
+        // "counter: ",
+        // storedComments.length,
         "isFavorite: ",
         storedFavorite
       );
       setPieceDetails((prevPieceDetails) => ({
         ...prevPieceDetails,
         ...currentImage,
-        comments: storedComments,
-        counter: storedComments.length,
+        // comments: storedComments,
+        // counter: storedComments.length,
         isFavorite: storedFavorite,
       }));
     }
@@ -71,13 +71,45 @@ export default function Details({ pieces, favorites, setFavorites }) {
 
   //comment stuff
 
-  function handleAddComment(comment) {
-    setPieceDetails((prevPieceDetails) => ({
-      ...prevPieceDetails,
-      comments: [comment, ...prevPieceDetails.comments],
-      counter: prevPieceDetails.counter + 1,
-    }));
-  }
+  // function handleAddComment(comment) {
+  //   setPieceDetails((prevPieceDetails) => ({
+  //     ...prevPieceDetails,
+  //     comments: [comment, ...prevPieceDetails.comments],
+  //     counter: prevPieceDetails.counter + 1,
+  //   }));
+  // }
+
+  // START
+  const initialComments = pieces.map((piece) => {
+    return { id: piece.slug, comments: [] };
+  });
+  console.log("mareike: ", initialComments);
+
+  const [comments, setComments, { removeItem, isPersistent }] =
+    useLocalStorageState("comments", {
+      defaultValue: initialComments,
+    });
+
+  const handleAddComment = (comment, pictureId) => {
+    // Create a new array with updated pieces
+    const updatedPieces = comments.map((piece) => {
+      // Find the piece with the matching ID
+      if (piece.id === pictureId) {
+        // Add the new comment to the comments array of the matched piece
+        return {
+          ...piece,
+          comments: [...piece.comments, comment], // Append the new comment
+        };
+      }
+      // Return the piece unchanged if it does not match the ID
+      return piece;
+    });
+
+    // Update the pieces state with the new array
+    setComments(updatedPieces);
+  };
+
+  // END
 
   function handleShowCommentCard() {
     setShowCommentCard(!showCommentCard);
@@ -98,6 +130,7 @@ export default function Details({ pieces, favorites, setFavorites }) {
               onAddComment={handleAddComment}
               favorites={favorites}
               setFavorites={setFavorites}
+              comments={comments}
             />
           </div>
           <DetailsButton

@@ -35,7 +35,7 @@ export default function DetailsButton({
   return (
     <StyledDetailsButton show={showCommentCard} onClick={onShowCommentCard}>
       {showCommentCard ? `${name} ⬇️` : `${name} ⬆️`}
-      {comments.length > 0 && <CommentCounter>{counter}</CommentCounter>}
+      {/* {comments.length > 0 && <CommentCounter>{counter}</CommentCounter>} */}
       {isFavorite === true && (
         <CommentCounter style={{ right: -20 }}>♥</CommentCounter>
       )}

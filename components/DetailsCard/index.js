@@ -37,6 +37,7 @@ export default function DetailsCard({
   onAddComment,
   favorites,
   setFavorites,
+  comments,
 }) {
   const { colors, imageSource, dimensions, name, artist, year, slug } =
     pieceDetails;
@@ -63,7 +64,11 @@ export default function DetailsCard({
           />
         </div>
       </ContentWrapper>
-      <CommentSection onAddComment={onAddComment} pieceDetails={pieceDetails} />
+      <CommentSection
+        pieceDetails={pieceDetails}
+        onAddComment={onAddComment}
+        comments={comments}
+      />
     </CommentCard>
   );
 }

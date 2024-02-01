@@ -1,6 +1,10 @@
 import { nanoid } from "nanoid";
 
-export default function CommentSection({ onAddComment, pieceDetails }) {
+export default function CommentSection({
+  pieceDetails,
+  onAddComment,
+  comments,
+}) {
   function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -9,17 +13,21 @@ export default function CommentSection({ onAddComment, pieceDetails }) {
       text: data.commentText,
       timestamp: new Date().toISOString(),
     };
-    onAddComment(newComment);
+    onAddComment(newComment, pieceDetails.slug);
     event.target.reset();
   }
 
-  const sortedComments = pieceDetails.comments.slice().sort((a, b) => {
-    return new Date(b.timestamp) - new Date(a.timestamp);
+  const sortedComments = comments.filter((piece) => {
+    piece.id === pieceDetails.slug;
   });
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form
+        onSubmit={(event) => {
+          handleSubmit(event);
+        }}
+      >
         <input
           type="text"
           name="commentText"

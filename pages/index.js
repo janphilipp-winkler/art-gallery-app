@@ -1,6 +1,7 @@
 import Spotlight from "@/components/Spotlight";
 import getRandomPicture from "@/lib/getRandomPicture";
 import { useEffect } from "react";
+import useLocalStorageState from "use-local-storage-state";
 
 export default function SpotlightPage({ pieces, favorites, setFavorites }) {
   const randomPiece = getRandomPicture(pieces);
