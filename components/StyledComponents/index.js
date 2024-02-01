@@ -93,6 +93,7 @@ const zoomIn = keyframes`
 export const StyledBackgroundImage = styled(Image)`
   width: 100%;
   height: 100%;
+  object-fit: cover;
   filter: ${(props) => (props.show ? "blur(50px)" : "blur(0px)")};
   animation: ${zoomIn} 0.5s linear;
 `;

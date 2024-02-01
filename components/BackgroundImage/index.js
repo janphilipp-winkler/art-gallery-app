@@ -19,9 +19,7 @@ export default function BackgroundImage({ pieceDetails, showCommentCard }) {
         show={showCommentCard}
         src={imageSource}
         loading="eager"
-        layout="fill"
-        objectFit="cover"
-        objectPosition="center"
+        fill
         alt={`${name} - Artist: ${artist} - Year: ${year}`}
       />{" "}
     </OverflowHidden>
